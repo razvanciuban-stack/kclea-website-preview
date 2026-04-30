@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Brainstorm preview server (local working files only — don't ship)
+.superpowers/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# Logs / temp
+*.log
+*.tmp
+
+# Backup files
+*.bak
+*.orig

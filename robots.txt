@@ -1,0 +1,28 @@
+# KCLEA preview build — keep search engines OUT until launch.
+# Replace this file (and remove the noindex meta tags in index.html)
+# when the redesigned site is approved for public release.
+
+User-agent: *
+Disallow: /
+
+# Block well-known crawlers explicitly too, just in case
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
