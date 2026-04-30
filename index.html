@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <title>KCLEA — King's College London Engineers' Association</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0d">
+<meta name="color-scheme" content="light">
 
 <!-- Preview build — search engines blocked until launch.
      Remove the three lines below + robots.txt before going public. -->
@@ -1598,24 +1600,300 @@
   }
   .foot li a:hover { color:#fff; }
   .foot li a:hover::after { transform:scaleX(1); }
-  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:11.5px; color:#666; }
-  .foot-bot em { font-style:italic; color:#9a9aa6; }
+  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#666; gap:16px; flex-wrap:wrap; }
+  .foot-bot em { font-style:italic; color:#bcbcbc; }
+
+  /* ============================================================
+     ACCESSIBILITY + RESPONSIVE  (European Accessibility Act / WCAG 2.1 AA)
+     ============================================================ */
+
+  /* Skip-to-content link — keyboard-first navigation */
+  .skip-link {
+    position:absolute; top:-60px; left:8px; z-index:200;
+    background:var(--ink); color:#fff !important; padding:12px 18px;
+    border-radius:6px; font-size:14px; font-weight:600;
+    text-decoration:underline;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top:8px; outline:3px solid var(--kings-red); outline-offset:2px; }
+
+  /* Universal focus ring — visible for keyboard users */
+  :focus-visible {
+    outline:3px solid var(--kings-red);
+    outline-offset:2px;
+    border-radius:3px;
+  }
+  /* Hide outline on mouse focus, keep for keyboard */
+  :focus:not(:focus-visible) { outline:none; }
+
+  /* Honour OS reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .item:hover, .channel:hover, .gov-doc:hover, .sub-card:hover,
+    .step:hover, .person:hover, .price-tier:hover, .term-card:hover,
+    .pillar:hover, .today-block:hover, .archive .link:hover,
+    .issue-card:hover .cover-mini, .cover-placeholder:hover,
+    .lockup:hover, .head-cta:hover, .ed-btn:hover, .channel-link:hover,
+    .gov-doc:hover, .next-up .row:hover, .e-row:hover {
+      transform: none !important;
+    }
+  }
+
+  /* Body min font size — readable on mobile */
+  body { font-size:16px; }
+
+  /* Contrast bumps — replace #888 used as body text (3.54:1 fails AA) */
+  .cover-placeholder .footer-bar { color:#5a5a5a; }
+  .item.feature .links a { color:#bcbcbc; }
+  .channel-link .for { opacity:1; }
+  .b-feature .desc, .b-feature .meta-kicker { color:var(--ink-muted); }
+  .past-lecture .yr-col .yr-tag { color:#3a3a3a; }
+  .winner-history .name em { color:#5a5a5a; }
+  .sessions .what { color:#3a3a3a; }
+  .speaker-bio { color:#3a3a3a; }
+  .const-section p, .const-section .clause { color:#3a3a3a; }
+
+  /* Reduce-motion-safe placeholder for input contrast — bump #bbb to #767676 */
+  .field input::placeholder, .field textarea::placeholder { color:#767676; }
+
+  /* Mobile menu button — hidden on desktop */
+  .mobile-menu-btn {
+    display:none;
+    background:none; border:none; padding:10px; cursor:pointer;
+    color:var(--ink); font-size:24px; line-height:1;
+    min-width:44px; min-height:44px;
+  }
+  .mobile-menu-btn:hover { color:var(--kings-red); }
+
+  /* === BREAKPOINT 1: 960px and below — tighten grids === */
+  @media (max-width: 960px) {
+    /* Multi-column grids → 2 columns */
+    .six, .pricing, .roles, .events-grid,
+    .sub-grid, .links-grid, .issue-grid, .terms,
+    .channels, .trophy-winners, .today-grid, .pillars,
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .heritage .milestones { grid-template-columns: repeat(3, 1fr); row-gap:36px; }
+    .heritage .milestones::before { display:none; }
+    .heritage .milestone::before { display:none; }
+    .heritage .milestone .year { margin-top:0; }
+
+    /* Hero text scales down */
+    .hero h1 { font-size:54px; }
+    .e-hero h1, .ed-hero h1, .b-hero h1, .memorial-hero h1 { font-size:48px; }
+    .memorial-hero h1 { font-size:64px; }
+
+    /* Footer columns → 2 col */
+    .foot-top { grid-template-columns: repeat(2, 1fr); gap:28px; }
+
+    /* Roster ratio adjustment */
+    .roster { grid-template-columns: repeat(2, 1fr); }
+
+    /* Logo a touch smaller */
+    .khead .lockup img.kclea-mark { height:48px; }
+  }
+
+  /* === BREAKPOINT 2: 720px and below — single column + mobile menu === */
+  @media (max-width: 720px) {
+    /* Hide desktop nav, show hamburger */
+    .nav { display:none; }
+    .mobile-menu-btn { display:flex; align-items:center; justify-content:center; }
+
+    /* When menu is open, nav becomes a vertical drawer */
+    body.menu-open .nav {
+      display:flex; flex-direction:column;
+      position:fixed; top:0; right:0; bottom:0; width:min(86vw, 340px);
+      background:#fff; padding:24px 22px 40px;
+      box-shadow:-12px 0 40px -12px rgba(0,0,0,.3);
+      z-index:120; gap:0; overflow-y:auto;
+      align-items:stretch;
+    }
+    body.menu-open .nav > a, body.menu-open .nav-item > a {
+      padding:14px 4px; font-size:16px; border-bottom:1px solid var(--rule);
+      min-height:44px; display:flex; align-items:center;
+    }
+    body.menu-open .nav-item { display:block; position:static; }
+    body.menu-open .nav-dropdown {
+      position:static; opacity:1; visibility:visible; transform:none;
+      box-shadow:none; border:none; padding:4px 0 14px; min-width:auto;
+      margin-bottom:4px; transition:none; max-height:none;
+    }
+    body.menu-open .nav-dropdown::before { display:none; }
+    body.menu-open .nav-dropdown li a { padding:10px 12px; font-size:14px; }
+    body.menu-open .nav-item.has-dropdown::after { display:none; }
+    body.menu-open::after {
+      content:""; position:fixed; inset:0; background:rgba(13,13,13,.45);
+      z-index:115;
+    }
+
+    /* Header layout shrinks */
+    .khead {
+      padding:12px 20px;
+      gap:12px;
+    }
+    .khead .lockup img.kclea-mark { height:42px; }
+    .foot-brand .lockup img.kclea-mark { height:60px; }
+    .khead a.head-cta { font-size:11.5px; padding:8px 12px; }
+
+    /* Big sections collapse to single column */
+    .hero, .e-hero, .ed-hero, .b-hero,
+    .six, .pricing, .roles, .events-grid,
+    .sub-grid, .links-grid, .issue-grid, .terms,
+    .channels, .trophy-winners, .today-grid, .pillars,
+    .steps,
+    .lecture-title, .b-feature, .editor-note, .contribute,
+    .gov-docs, .recruit, .cta-band, .find-contemp,
+    .speaker, .connect, .next-up .row, .e-row,
+    .past-lecture, .contact-shell, .roster, .archive {
+      grid-template-columns: 1fr !important;
+      gap: 24px;
+    }
+    .archive-issues .head { display:block; }
+    .archive-issues .head p { margin-top:14px; }
+
+    /* Hero image — taller crop on mobile so subjects stay readable */
+    .hero-banner img { aspect-ratio: 4/3; }
+    .hero-bottom { grid-template-columns:1fr; gap:24px; }
+    .hero-bottom .meta-line { padding-left:0; border-left:none; padding-top:18px; border-top:1px solid var(--rule); }
+
+    /* Hide hover-only decorative bits on mobile */
+    .khead .lockup .lockup-tagline { display:none; }
+    .khead .lockup .mark-frame { padding:0; margin:0; }
+
+    /* Hero typography downsized */
+    .hero h1 { font-size:42px; }
+    .e-hero h1, .ed-hero h1, .b-hero h1 { font-size:38px; }
+    .memorial-hero h1 { font-size:54px; }
+    .hero-top { margin-bottom:24px; }
+
+    /* Section heads downsized */
+    .section-head { display:block; }
+    .section-head h2, .ed-section h2 { font-size:30px; }
+    .section-head .desc { margin-top:14px; max-width:none; }
+
+    /* Stat sidebars stack */
+    .e-side, .b-hero-side { border-left:none; padding-left:0; padding-top:18px; border-top:1px solid var(--rule); }
+
+    /* Event row layout simpler */
+    .e-row {
+      grid-template-columns: 1fr !important;
+      padding: 18px 0; gap:8px;
+    }
+    .e-row .e-time { text-align:left; }
+    .e-row .e-tag { justify-self:start; }
+
+    /* Past lecture entries stack */
+    .past-lecture { grid-template-columns: 1fr !important; gap:14px; }
+    .past-lecture .yr-col { display:flex; align-items:baseline; gap:14px; }
+    .past-lecture .yr-col .yr { font-size:48px; }
+    .past-lecture .yr-col .yr-tag { margin-top:0; }
+
+    /* Memorial list — single column */
+    .memorial-list li { grid-template-columns:1fr; gap:6px; }
+    .memorial-list .dates { margin-left:0; }
+
+    /* Form layout — inputs full width */
+    .field-row { grid-template-columns: 1fr; }
+    .form-card { padding: 26px 22px; }
+
+    /* Heritage milestones — vertical */
+    .heritage .milestones { grid-template-columns:1fr; row-gap:24px; }
+    .heritage h2 { font-size:30px; }
+
+    /* Hardware Hack callout — stack */
+    .hack-band { flex-direction:column; align-items:flex-start; padding:24px 20px; gap:18px; }
+    .hack-band .lhs { flex-direction:column; align-items:flex-start; gap:12px; }
+
+    /* Disclaimer band — wraps, item alignment ok */
+    .disclaimer { padding:20px; flex-direction:row; }
+
+    /* Footer single column */
+    .foot-top { grid-template-columns:1fr; gap:24px; padding-bottom:24px; }
+    .foot-bot { flex-direction:column; gap:8px; padding-top:18px; }
+
+    /* Reduce padding on virtually every section */
+    .khead { padding:12px 20px; }
+    .hero, .e-hero, .ed-hero, .b-hero, .memorial-hero {
+      padding:36px 20px 28px;
+    }
+    .hack-band, .disclaimer, .footnote, .breadcrumb,
+    .pull-quote, .map-strip, .arrival, .find-contemp,
+    .tribute-note { padding-left:20px; padding-right:20px; }
+    .pull-quote { padding-top:36px; padding-bottom:36px; }
+    .pull-quote p { font-size:22px; }
+    .section, .ed-section, .archive, .archive-issues,
+    .b-feature, .editor-note, .contribute, .gov-docs,
+    .roster-group, .lecture-title, .history-aside,
+    .next-up, .heritage, .today, .subpages,
+    .contact-shell, .month-section, .recruit, .cta-band,
+    .doc-shell, .past-lectures, .memorial-list, .foot {
+      padding-left:20px; padding-right:20px;
+      padding-top:40px; padding-bottom:40px;
+    }
+    .doc-shell, .past-lectures { padding-top:24px; padding-bottom:32px; }
+
+    /* Touch-target minimums for all interactive elements */
+    .nav-dropdown li a, .channel, .item, .gov-doc, .sub-card,
+    .link-card, .channel-link, .e-row, .person, .step,
+    .price-tier, .term-card, .pillar, .today-block,
+    .archive .link, .issue-card, .past-lecture, .gov-doc,
+    .trophy-winner, .next-up .row, .winner-history li,
+    .memorial-list li, .pl-watch, .ed-btn,
+    a.head-cta, button {
+      min-height: 44px;
+    }
+    .ed-btn, button[type=submit], a.head-cta { padding-top:13px; padding-bottom:13px; }
+
+    /* Body text minimums (was as low as 11.5–12px in places) */
+    .nav-dropdown li a { font-size:14px; }
+    .item p, .channel p, .e-event .where, .where,
+    .feat p, .channel p, .archive .link p,
+    .sub-card p, .link-card p, .gov-doc p,
+    .term-card p, .pillar p, .trophy-winner p,
+    .price-tier .who, .speaker .bio p, .speaker-bio,
+    .past-lecture .body p, .editor-note .quote p,
+    .b-feature .desc, .archive-issues .head p,
+    .find-contemp .rhs p, .contribute p, .cta-band p,
+    .recruit p, .contact-side .lede,
+    .channel-link .note, .field .help { font-size:14px; }
+
+    /* Logo tagline hidden on mobile */
+    .khead .lockup::after { display:none; }
+  }
+
+  /* Tiny-screen safety (≤ 380px) — extra padding cut */
+  @media (max-width: 380px) {
+    .hero h1 { font-size:34px; }
+    .e-hero h1, .ed-hero h1, .b-hero h1 { font-size:30px; }
+    .memorial-hero h1 { font-size:42px; }
+    .ed-pills { gap:5px; }
+    .ed-pill { font-size:11px; padding:6px 10px; }
+  }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <!-- ============================================================
      SHARED HEADER
      ============================================================ -->
-<header class="khead">
-  <a class="lockup" data-page-link="home">
+<header class="khead" role="banner">
+  <a class="lockup" data-page-link="home" aria-label="KCLEA — King's College London Engineers' Association · Home">
     <span class="mark-frame">
       <img class="kclea-mark" src="assets/logos/kclea-logo-primary.svg" alt="KCLEA — King's College London Engineers' Association">
     </span>
     <span class="lockup-tagline" aria-hidden="true">since <em>1838</em></span>
     <span class="visually-hidden">KCLEA — King's College London Engineers' Association · Home</span>
   </a>
-  <nav class="nav">
+  <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
+  <nav class="nav" id="primary-nav" aria-label="Primary navigation">
     <a data-page-link="home">Home</a>
 
     <div class="nav-item has-dropdown" tabindex="0">
@@ -1677,7 +1955,7 @@
   <a class="head-cta" data-page-link="contact">Join KCLEA</a>
 </header>
 
-<main>
+<main id="main-content" role="main">
 
   <!-- ============================================================
        HOME PAGE
@@ -4334,7 +4612,7 @@
 <!-- ============================================================
      SHARED FOOTER
      ============================================================ -->
-<footer class="foot">
+<footer class="foot" role="contentinfo">
   <div class="foot-top">
     <div class="foot-brand">
       <a class="lockup" data-page-link="home">
@@ -4428,6 +4706,38 @@
       setActive(initial);
     } else {
       setActive('home');
+    }
+
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        const open = document.body.classList.toggle('menu-open');
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        menuBtn.textContent = open ? '✕' : '☰';
+      });
+      // Close menu when a nav link is clicked (mobile)
+      document.querySelectorAll('.nav [data-page-link]').forEach(link => {
+        link.addEventListener('click', () => {
+          if (document.body.classList.contains('menu-open')) {
+            document.body.classList.remove('menu-open');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.setAttribute('aria-label', 'Open navigation menu');
+            menuBtn.textContent = '☰';
+          }
+        });
+      });
+      // Close menu on Escape
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+          document.body.classList.remove('menu-open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menuBtn.setAttribute('aria-label', 'Open navigation menu');
+          menuBtn.textContent = '☰';
+          menuBtn.focus();
+        }
+      });
     }
   })();
 </script>
