@@ -1707,6 +1707,10 @@
     /* Hide the desktop "Join KCLEA" CTA on mobile — Contact lives in the drawer */
     .khead a.head-cta { display:none !important; }
 
+    /* Make the header NOT a stacking context on mobile so the drawer's z-index
+       can take effect at the page-root level (escapes the sticky-header trap). */
+    .khead { position:static !important; z-index:auto !important; }
+
     /* When menu is open, nav becomes a vertical drawer */
     body.menu-open nav.nav {
       display:flex !important; flex-direction:column;
@@ -1738,8 +1742,8 @@
       animation: scrimIn .2s ease-out;
     }
     @keyframes scrimIn { from { opacity:0; } to { opacity:1; } }
-    /* Hamburger button stays above the scrim and switches to white when open */
-    body.menu-open .mobile-menu-btn { z-index:210; position:relative; color:#fff; }
+    /* Close (✕) button sits above the white drawer — keep it red for contrast */
+    body.menu-open .mobile-menu-btn { z-index:210; position:relative; color:var(--kings-red); }
     /* Page scroll locked when drawer open */
     body.menu-open { overflow:hidden; }
 
