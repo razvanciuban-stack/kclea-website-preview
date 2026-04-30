@@ -7,8 +7,7 @@
 <meta name="theme-color" content="#0d0d0d">
 <meta name="color-scheme" content="light">
 
-<!-- Preview build — search engines blocked until launch.
-     Remove the three lines below + robots.txt before going public. -->
+<!-- Preview build — search engines blocked until launch. -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
@@ -1701,36 +1700,48 @@
 
   /* === BREAKPOINT 2: 720px and below — single column + mobile menu === */
   @media (max-width: 720px) {
-    /* Hide desktop nav, show hamburger */
-    .nav { display:none; }
-    .mobile-menu-btn { display:flex; align-items:center; justify-content:center; }
+    /* Hide desktop nav, show hamburger.
+       !important deliberately overrides the base `.nav { display:flex }` rule. */
+    nav.nav { display:none !important; }
+    .mobile-menu-btn { display:flex !important; align-items:center; justify-content:center; }
+    /* Hide the desktop "Join KCLEA" CTA on mobile — Contact lives in the drawer */
+    .khead a.head-cta { display:none !important; }
 
     /* When menu is open, nav becomes a vertical drawer */
-    body.menu-open .nav {
-      display:flex; flex-direction:column;
+    body.menu-open nav.nav {
+      display:flex !important; flex-direction:column;
       position:fixed; top:0; right:0; bottom:0; width:min(86vw, 340px);
-      background:#fff; padding:24px 22px 40px;
+      background:#fff; padding:80px 22px 40px;
       box-shadow:-12px 0 40px -12px rgba(0,0,0,.3);
-      z-index:120; gap:0; overflow-y:auto;
+      z-index:200; gap:0; overflow-y:auto;
       align-items:stretch;
+      animation: drawerIn .25s ease-out;
     }
+    @keyframes drawerIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
     body.menu-open .nav > a, body.menu-open .nav-item > a {
       padding:14px 4px; font-size:16px; border-bottom:1px solid var(--rule);
-      min-height:44px; display:flex; align-items:center;
+      min-height:44px; display:flex; align-items:center; color:var(--ink);
     }
-    body.menu-open .nav-item { display:block; position:static; }
+    body.menu-open .nav-item { display:block; position:static; width:100%; }
     body.menu-open .nav-dropdown {
       position:static; opacity:1; visibility:visible; transform:none;
       box-shadow:none; border:none; padding:4px 0 14px; min-width:auto;
       margin-bottom:4px; transition:none; max-height:none;
     }
     body.menu-open .nav-dropdown::before { display:none; }
-    body.menu-open .nav-dropdown li a { padding:10px 12px; font-size:14px; }
+    body.menu-open .nav-dropdown li a { padding:10px 12px; font-size:14px; min-height:36px; }
     body.menu-open .nav-item.has-dropdown::after { display:none; }
+    body.menu-open .nav-item.has-dropdown > a::before { display:none; }
     body.menu-open::after {
-      content:""; position:fixed; inset:0; background:rgba(13,13,13,.45);
-      z-index:115;
+      content:""; position:fixed; inset:0; background:rgba(13,13,13,.55);
+      z-index:190;
+      animation: scrimIn .2s ease-out;
     }
+    @keyframes scrimIn { from { opacity:0; } to { opacity:1; } }
+    /* Hamburger button stays above the scrim and switches to white when open */
+    body.menu-open .mobile-menu-btn { z-index:210; position:relative; color:#fff; }
+    /* Page scroll locked when drawer open */
+    body.menu-open { overflow:hidden; }
 
     /* Header layout shrinks */
     .khead {
@@ -4710,6 +4721,14 @@
 
     // Mobile menu toggle
     const menuBtn = document.querySelector('.mobile-menu-btn');
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+      if (menuBtn) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-label', 'Open navigation menu');
+        menuBtn.textContent = '☰';
+      }
+    }
     if (menuBtn) {
       menuBtn.addEventListener('click', () => {
         const open = document.body.classList.toggle('menu-open');
@@ -4717,26 +4736,28 @@
         menuBtn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
         menuBtn.textContent = open ? '✕' : '☰';
       });
-      // Close menu when a nav link is clicked (mobile)
+      // Close on link click (mobile drawer)
       document.querySelectorAll('.nav [data-page-link]').forEach(link => {
         link.addEventListener('click', () => {
-          if (document.body.classList.contains('menu-open')) {
-            document.body.classList.remove('menu-open');
-            menuBtn.setAttribute('aria-expanded', 'false');
-            menuBtn.setAttribute('aria-label', 'Open navigation menu');
-            menuBtn.textContent = '☰';
-          }
+          if (document.body.classList.contains('menu-open')) closeMenu();
         });
       });
-      // Close menu on Escape
+      // Close on Escape
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
-          document.body.classList.remove('menu-open');
-          menuBtn.setAttribute('aria-expanded', 'false');
-          menuBtn.setAttribute('aria-label', 'Open navigation menu');
-          menuBtn.textContent = '☰';
+          closeMenu();
           menuBtn.focus();
         }
+      });
+      // Close when scrim (the body::after pseudo) is clicked.
+      // We can't add a listener directly to ::after — use a body click that
+      // checks if the click landed outside the drawer and the menu button.
+      document.addEventListener('click', e => {
+        if (!document.body.classList.contains('menu-open')) return;
+        const drawer = document.querySelector('.nav');
+        if (!drawer) return;
+        if (drawer.contains(e.target) || menuBtn.contains(e.target)) return;
+        closeMenu();
       });
     }
   })();
