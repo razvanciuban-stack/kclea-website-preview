@@ -1588,9 +1588,25 @@
     clip-path: inset(0 -100vmax);
   }
   .foot-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; padding-bottom:32px; border-bottom:1px solid var(--kings-navy-border); }
-  .foot-brand .lockup .name { color:#fff; }
-  .foot-brand .lockup .name .sub { color:#888; }
-  .foot-brand p { margin:14px 0 0; font-size:12.5px; line-height:1.6; color:#9a9aa6; max-width:300px; }
+  .foot-brand .wordmark {
+    display:inline-flex; flex-direction:column; gap:6px;
+    text-decoration:none; color:#fff;
+    transition: color .2s ease;
+  }
+  .foot-brand .wordmark:hover { color:var(--kings-red-bright); }
+  .foot-brand .wordmark .wordmark-abbr {
+    font-family:'Cormorant Garamond', serif;
+    font-size:28px; font-weight:600; line-height:1;
+    letter-spacing:.06em;
+  }
+  .foot-brand .wordmark .wordmark-full {
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic; font-size:14px; line-height:1.25;
+    color:#cbd4e1;
+    transition: color .2s ease;
+  }
+  .foot-brand .wordmark:hover .wordmark-full { color:#e6ecf5; }
+  .foot-brand p { margin:14px 0 0; font-size:12.5px; line-height:1.6; color:#9bb0c9; max-width:300px; }
   .foot h5 { margin:0 0 12px; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff; font-weight:700; }
   .foot ul { margin:0; padding:0; list-style:none; }
   .foot li { font-size:13px; line-height:2; color:#9bb0c9; }
@@ -1907,7 +1923,7 @@
 <header class="khead" role="banner">
   <a class="lockup" data-page-link="home" aria-label="KCLEA — King's College London Engineers' Association · Home">
     <span class="mark-frame">
-      <img class="kclea-mark" src="assets/logos/kclea-logo-primary.svg" alt="KCLEA — King's College London Engineers' Association">
+      <img class="kclea-mark" src="assets/logos/kclea-old-primary.png" alt="KCLEA — King's College London Engineers' Association">
     </span>
     <span class="lockup-tagline" aria-hidden="true">since <em>1838</em></span>
     <span class="visually-hidden">KCLEA — King's College London Engineers' Association · Home</span>
@@ -4635,9 +4651,9 @@
 <footer class="foot" role="contentinfo">
   <div class="foot-top">
     <div class="foot-brand">
-      <a class="lockup" data-page-link="home">
-        <img class="kclea-mark" src="assets/logos/kclea-logo-white.svg" alt="KCLEA — King's College London Engineers' Association">
-        <span class="visually-hidden">KCLEA — King's College London Engineers' Association · Home</span>
+      <a class="wordmark" data-page-link="home" aria-label="KCLEA — King's College London Engineers' Association · Home">
+        <span class="wordmark-abbr">KCLEA</span>
+        <span class="wordmark-full">King's College London<br>Engineers' Association</span>
       </a>
       <p>The Alumni Association for those who have studied Engineering, or work at King's in the Faculty or Division of Engineering.</p>
     </div>
