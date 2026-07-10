@@ -961,13 +961,15 @@
   .person {
     background:#fff; padding:22px 22px 24px; display:flex; flex-direction:column; gap:12px;
     transition: background-color .25s ease, color .25s ease;
-    cursor:pointer; min-height:170px;
+    cursor:pointer; min-height:200px;
   }
   .person:hover { background:var(--ink); color:#fff; }
   .person:hover .role-lbl { color:var(--kings-red); }
   .person:hover h3 { color:#fff; }
   .person:hover .years { color:#bcbcbc; }
+  .person:hover .program { color:#cbd4e1; }
   .person:hover .avatar { background:var(--kings-red); color:#fff; }
+  .person:hover .avatar { border-color:var(--kings-red); }
   .person.vacancy:hover { background:var(--kings-red); color:#fff; }
   .person.vacancy:hover .role-lbl { color:#fff; opacity:.9; }
   .person.vacancy:hover h3 { color:#fff; }
@@ -980,12 +982,16 @@
   }
   .person .name-row { display:flex; align-items:flex-start; gap:14px; flex:1; }
   .avatar {
-    width:42px; height:42px; flex:0 0 auto;
+    width:56px; height:56px; flex:0 0 auto;
     background:var(--kings-red); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:18px; line-height:1;
-    transition: background-color .25s ease, color .25s ease;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:22px; line-height:1;
+    border-radius:4px; overflow:hidden;
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+    position:relative;
   }
+  /* When a member photo is provided, drop the img inside .avatar — it fills the square */
+  .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
   .person.vacancy .avatar { background:transparent; color:var(--ink-soft); border:1px dashed var(--rule); font-style:normal; font-size:24px; }
   .person h3 {
     margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px;
@@ -993,6 +999,14 @@
   }
   .person h3 em { font-style:italic; color:var(--kings-red); }
   .person.vacancy h3 { font-style:italic; color:var(--ink-soft); }
+  .person .program {
+    margin-top:6px; font-size:12px; line-height:1.35; color:var(--ink-muted);
+    transition: color .25s ease;
+  }
+  .person .program em {
+    font-style:italic; color:var(--kings-red);
+    font-family:'Cormorant Garamond',serif; font-size:13px;
+  }
   .person .years {
     margin-top:3px; font-size:11.5px; color:var(--ink-soft); transition: color .25s ease;
     font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px;
@@ -1620,8 +1634,15 @@
   .foot li a:hover::after { transform:scaleX(1); }
   .foot-brand p { color:#9bb0c9 !important; }
   .foot-brand .lockup .name .sub { color:#9bb0c9 !important; }
-  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#7c93b0; gap:16px; flex-wrap:wrap; }
+  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#7c93b0; gap:16px; flex-wrap:wrap; align-items:center; }
   .foot-bot em { font-style:italic; color:#cbd4e1; }
+  .foot-bot .foot-credit { text-align:center; flex:1 1 auto; }
+  .foot-bot .foot-credit a {
+    color:#cbd4e1; font-weight:600; letter-spacing:.01em;
+    border-bottom:1px solid transparent;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .foot-bot .foot-credit a:hover { color:#fff; border-bottom-color:var(--kings-red-bright); }
 
   /* ============================================================
      ACCESSIBILITY + RESPONSIVE  (European Accessibility Act / WCAG 2.1 AA)
@@ -3333,6 +3354,7 @@
             <div class="avatar">PW</div>
             <div>
               <h3>Peter <em>Weitzel</em></h3>
+              <div class="program"><em>Electrical Engineering</em></div>
               <div class="years"><strong>KCL</strong>1972 — 1975</div>
             </div>
           </div>
@@ -3344,6 +3366,7 @@
             <div class="avatar">CB</div>
             <div>
               <h3>Chris <em>Bowden</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1963 — 1967</div>
             </div>
           </div>
@@ -3355,6 +3378,7 @@
             <div class="avatar">DB</div>
             <div>
               <h3>David <em>Blacoe</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1966 — 1969</div>
             </div>
           </div>
@@ -3366,6 +3390,7 @@
             <div class="avatar">LB</div>
             <div>
               <h3>Liz <em>Beckmann</em></h3>
+              <div class="program"><em>Electrical &amp; Electronic Engineering</em></div>
               <div class="years"><strong>KCL</strong>1971 — 1974</div>
             </div>
           </div>
@@ -3377,6 +3402,7 @@
             <div class="avatar">JT</div>
             <div>
               <h3>John <em>Thomson</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1964 — 1967</div>
             </div>
           </div>
@@ -3415,6 +3441,7 @@
             <div class="avatar">GF</div>
             <div>
               <h3>Georgina <em>Lupa Florian</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2011 — 2012</div>
             </div>
           </div>
@@ -3426,6 +3453,7 @@
             <div class="avatar">GO</div>
             <div>
               <h3>George <em>Obada</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2019 — 2022</div>
             </div>
           </div>
@@ -3449,6 +3477,7 @@
             <div class="avatar">EO</div>
             <div>
               <h3>Dr Ernest <em>Okon</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1997 — 2001</div>
             </div>
           </div>
@@ -3487,6 +3516,7 @@
             <div class="avatar">JZ</div>
             <div>
               <h3>Dr John <em>Zubrzycki</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1974 — 1981</div>
             </div>
           </div>
@@ -3498,6 +3528,7 @@
             <div class="avatar">AB</div>
             <div>
               <h3>Afrin <em>Basit</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2021 — 2024</div>
             </div>
           </div>
@@ -3572,6 +3603,7 @@
             <div class="avatar">MC</div>
             <div>
               <h3>Mike <em>Clode</em></h3>
+              <div class="program"><em>Faculty of Engineering</em>, staff</div>
               <div class="years"><strong>KCL</strong>1981 staff · 1989 — 2014</div>
             </div>
           </div>
@@ -3583,6 +3615,7 @@
             <div class="avatar">CB</div>
             <div>
               <h3>Chris <em>Bowden</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1963 — 1967</div>
             </div>
           </div>
@@ -3594,6 +3627,7 @@
             <div class="avatar">JT</div>
             <div>
               <h3>John <em>Thomson</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1964 — 1967</div>
             </div>
           </div>
@@ -3605,6 +3639,7 @@
             <div class="avatar">GR</div>
             <div>
               <h3>Graham <em>Raven</em></h3>
+              <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1960 — 1963</div>
             </div>
           </div>
@@ -3616,6 +3651,7 @@
             <div class="avatar">DS</div>
             <div>
               <h3>David <em>Sheridan</em></h3>
+              <div class="program"><em>Electrical &amp; Electronic Engineering</em></div>
               <div class="years"><strong>KCL</strong>1968 — 1972</div>
             </div>
           </div>
@@ -4689,6 +4725,7 @@
   </div>
   <div class="foot-bot">
     <div>© 2018–2026 <em>King's</em> College London Engineers' Association. All rights reserved.</div>
+    <div class="foot-credit">Built by <a href="https://www.wolfpack-digital.com" target="_blank" rel="noopener">Wolfpack Digital</a></div>
     <div>Updated: 29-04-2026</div>
   </div>
 </footer>
