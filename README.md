@@ -2,12 +2,13 @@
 
 Visual preview build of the King's College London Engineers' Association website redesign.
 
-**🔗 Live preview:** <https://kclea-website.vercel.app>
+**🔗 Live preview:** <https://razvanciuban-stack.github.io/kclea-website-preview/>
 
 > ⚠️ **This is a preview build, not the live site.**
 > The original site lives at <https://www.kclea.org.uk/>.
-> Search engines are blocked via `robots.txt`, `<meta name="robots" content="noindex">`, and `X-Robots-Tag` HTTP header (defence in depth).
-> Hosted on Vercel — deploys automatically on every push to `main`.
+> Search engines are blocked via `robots.txt` and `<meta name="robots" content="noindex">`.
+> Hosted on GitHub Pages — deploys automatically on every push to `main`.
+> A `vercel.json` config lives in the repo as an alternative deployment option if we switch back.
 
 ## What's in here
 
