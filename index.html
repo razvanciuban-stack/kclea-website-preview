@@ -17,7 +17,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -53,6 +53,12 @@
   }
   a { color:inherit; text-decoration:none; cursor:pointer; }
   img { max-width:100%; display:block; }
+
+  /* Emphasis: no italics anywhere — inline <em>/<i> render as bold + King's red */
+  em, i { font-style:normal; color:var(--kings-red); font-weight:600; }
+
+  /* Mobile-only CTA link (Become a Member) — hidden on desktop, shown only inside the mobile drawer */
+  .mobile-cta { display:none; }
 
   /* === Header === */
   .khead {
@@ -106,7 +112,7 @@
   }
   /* Animated tagline appears alongside the logo on hover */
   .khead .lockup .lockup-tagline {
-    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-style:normal;
     font-size:18px; line-height:1; letter-spacing:.005em;
     color:var(--ink-soft);
     max-width:0; opacity:0;
@@ -117,7 +123,7 @@
       color .35s ease;
   }
   .khead .lockup .lockup-tagline em {
-    font-style:italic; color:var(--kings-red);
+    font-style:normal; color:var(--kings-red);
     display:inline-block;
     transform:translateY(2px); opacity:0;
     transition: transform .35s cubic-bezier(.2,.7,.2,1.2) .25s, opacity .3s ease .25s;
@@ -161,58 +167,69 @@
   .nav-item.has-dropdown:hover > a::before,
   .nav-item.has-dropdown:focus-within > a::before { transform:rotate(180deg); opacity:1; }
 
+  /* Wide sub-panel dropdown — inspired by kcl.ac.uk's header__submenu */
   .nav-dropdown {
-    position:absolute; top:calc(100% + 14px); left:-18px; min-width:280px;
-    background:#fff; border:1px solid var(--rule); border-radius:6px;
-    box-shadow:0 18px 40px -16px rgba(13,13,13,.25), 0 6px 14px -6px rgba(13,13,13,.1);
-    padding:8px 0; margin:0; list-style:none;
-    opacity:0; visibility:hidden; transform:translateY(-6px);
-    transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+    position:absolute; top:calc(100% + 18px); left:-24px; min-width:420px;
+    background:#fff; border:1px solid var(--rule); border-radius:2px;
+    box-shadow:0 24px 48px -18px rgba(13,13,13,.22), 0 10px 22px -10px rgba(13,13,13,.12);
+    padding:24px 8px; margin:0; list-style:none;
+    opacity:0; visibility:hidden; transform:translateY(-4px);
+    transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
     z-index:60;
+    /* Two-column grid for parents with many children */
+    columns: 1;
+  }
+  /* About + Committee dropdowns get a two-column layout for compactness */
+  .nav-dropdown.cols-2 {
+    min-width:520px;
+    display:grid; grid-template-columns:1fr 1fr; gap:0 12px;
   }
   .nav-item:hover > .nav-dropdown,
   .nav-item:focus-within > .nav-dropdown {
     opacity:1; visibility:visible; transform:translateY(0);
-    transition: opacity .2s ease, transform .2s ease, visibility 0s;
+    transition: opacity .22s ease, transform .22s ease, visibility 0s;
   }
   /* Hover bridge so the menu doesn't close while moving cursor down */
   .nav-item.has-dropdown::after {
-    content:""; position:absolute; top:100%; left:0; right:0; height:14px;
+    content:""; position:absolute; top:100%; left:0; right:0; height:18px;
   }
-  .nav-dropdown::before {
-    content:""; position:absolute; top:-7px; left:24px;
-    width:12px; height:12px; background:#fff;
-    border-top:1px solid var(--rule); border-left:1px solid var(--rule);
-    transform:rotate(45deg);
-  }
+  /* No pointed arrow — cleaner, editorial like KCL's site */
   .nav-dropdown li { padding:0; margin:0; }
   .nav-dropdown li a {
-    display:block; padding:10px 18px; font-size:12.5px; line-height:1.4;
-    color:var(--ink-muted); text-decoration:none;
+    display:block; padding:9px 20px; font-size:13.5px; line-height:1.35;
+    color:var(--ink); text-decoration:none;
     border-left:2px solid transparent;
     transition: background-color .15s ease, color .15s ease, border-left-color .15s ease, padding-left .15s ease;
   }
-  .nav-dropdown li a .lab {
-    display:block; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--kings-red); font-weight:700; margin-bottom:2px; opacity:.85;
-  }
   .nav-dropdown li a:hover, .nav-dropdown li a:focus {
-    background:var(--paper-warm); color:var(--ink);
-    border-left-color:var(--kings-red); padding-left:22px;
+    background:var(--paper-warm); color:var(--kings-red);
+    border-left-color:var(--kings-red); padding-left:24px;
   }
   .nav-dropdown li a.active {
     color:var(--kings-red); font-weight:600;
     border-left-color:var(--kings-red);
   }
   .nav-dropdown li.divider {
-    height:1px; background:var(--rule); margin:6px 0;
+    height:1px; background:var(--rule); margin:10px 12px;
+    grid-column: 1 / -1;
   }
   .nav-dropdown li.head-row {
-    padding:8px 18px 6px; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--ink-soft); font-weight:700;
+    padding:6px 20px 8px; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--kings-red); font-weight:700;
+    grid-column: 1 / -1;
+    border-bottom:1px solid var(--rule); margin-bottom:6px;
   }
-  a.head-cta { font-size:12px; font-weight:600; color:#fff !important; background:var(--kings-navy); padding:8px 14px; border-radius:999px; transition: background-color .2s ease, transform .15s ease; }
-  a.head-cta:hover { background:var(--kings-red); transform:translateY(-1px); }
+  a.head-cta {
+    font-size:12.5px; font-weight:700; color:#fff !important;
+    background:var(--kings-red); padding:9px 16px; border-radius:999px;
+    letter-spacing:.01em;
+    box-shadow: 0 2px 6px rgba(211,35,26,.28);
+    transition: background-color .2s ease, transform .15s ease, box-shadow .2s ease;
+  }
+  a.head-cta:hover {
+    background:#b41d15; transform:translateY(-1px);
+    box-shadow: 0 4px 10px rgba(211,35,26,.4);
+  }
 
   /* === Page surface === */
   main { display:block; }
@@ -224,12 +241,12 @@
   .hero-top { max-width:1100px; margin-bottom:36px; }
   .kicker { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:18px; }
   .hero h1 {
-    margin:0; font-family:'Cormorant Garamond', serif; font-weight:500;
+    margin:0; font-family:'Space Grotesk', system-ui, sans-serif; font-weight:600;
     font-size:72px; line-height:1.0; letter-spacing:-.014em; color:var(--ink);
     max-width:980px;
     text-wrap:balance;
   }
-  .hero h1 em { font-style:italic; color:var(--kings-red); font-weight:500; }
+  .hero h1 em { font-style:normal; color:var(--kings-red); font-weight:500; }
 
   .hero-banner {
     margin:0 0 36px; padding:0;
@@ -245,7 +262,7 @@
     padding:14px 18px;
     background:linear-gradient(180deg, rgba(13,13,13,0) 0%, rgba(13,13,13,.85) 100%);
     color:#fff;
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-style:normal; font-size:14px;
     letter-spacing:.005em;
   }
 
@@ -272,9 +289,9 @@
   .hack-band .lhs { display:flex; align-items:center; gap:18px; }
   .hack-band .badge {
     background:var(--kings-red); color:#fff; padding:5px 10px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; font-weight:600;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:13px; font-weight:600;
   }
-  .hack-band h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; line-height:1.1; }
+  .hack-band h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; line-height:1.1; }
   .hack-band p { margin:4px 0 0; font-size:13px; color:#cbd4e1; }
   .hack-band .btn {
     background:#fff; color:var(--ink); padding:10px 18px; border-radius:999px;
@@ -287,16 +304,16 @@
   .section { padding:64px 56px; border-bottom:1px solid var(--rule); }
   .section.alt { background:var(--paper-warm); }
   .section-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:36px; gap:30px; }
-  .section-head h2 { margin:0; font-family:'Cormorant Garamond', serif; font-weight:500; font-size:42px; line-height:1; letter-spacing:-.01em; color:var(--ink); }
-  .section-head h2 em { font-style:italic; color:var(--kings-red); }
+  .section-head h2 { margin:0; font-family:'Space Grotesk', system-ui, sans-serif; font-weight:600; font-size:42px; line-height:1; letter-spacing:-.01em; color:var(--ink); }
+  .section-head h2 em { font-style:normal; color:var(--kings-red); }
   .section-head .desc { font-size:13.5px; color:var(--ink-soft); max-width:380px; line-height:1.6; }
 
   /* === 6 cards grid === */
   .six { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); }
   .item { background:#fff; padding:24px 24px 26px; display:flex; flex-direction:column; transition: background-color .25s ease, color .25s ease; cursor:pointer; }
-  .item .num { font-family:'Cormorant Garamond',serif; font-size:13px; color:var(--kings-red); font-weight:700; letter-spacing:.04em; }
-  .item h3 { margin:6px 0 10px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; line-height:1.05; letter-spacing:-.005em; color:var(--ink); transition: color .25s ease; }
-  .item h3 em { font-style:italic; color:var(--kings-red); }
+  .item .num { font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px; color:var(--kings-red); font-weight:700; letter-spacing:.04em; }
+  .item h3 { margin:6px 0 10px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; line-height:1.05; letter-spacing:-.005em; color:var(--ink); transition: color .25s ease; }
+  .item h3 em { font-style:normal; color:var(--kings-red); }
   .item p { margin:0 0 14px; font-size:13px; line-height:1.6; color:var(--ink-muted); flex:1; transition: color .25s ease; }
   .item .links { font-size:12px; color:var(--ink-soft); line-height:1.7; transition: color .25s ease; }
   .item .links a { color:var(--kings-red); font-weight:600; border-bottom:1px solid #D3231A33; }
@@ -309,10 +326,10 @@
 
   /* === Stay connected === */
   .connect { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
-  .connect .head h2 { margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:42px; line-height:1.04; letter-spacing:-.01em; }
-  .connect .head h2 em { font-style:italic; color:var(--kings-red); }
+  .connect .head h2 { margin:0 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:42px; line-height:1.04; letter-spacing:-.01em; }
+  .connect .head h2 em { font-style:normal; color:var(--kings-red); }
   .connect .head p { margin:0 0 8px; font-size:14px; line-height:1.6; color:var(--ink-muted); max-width:440px; }
-  .connect .head .hint { font-style:italic; font-size:12px; color:var(--kings-red); }
+  .connect .head .hint { font-style:normal; font-size:12px; color:var(--kings-red); }
   .channels { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .channel {
     border:1px solid var(--rule); border-radius:6px; padding:18px;
@@ -325,7 +342,7 @@
   .channel:hover p { color:#bcbcbc; }
   .channel:hover .arrow { transform:translateX(3px); }
   .channel .lab { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .channel h4 { margin:6px 0 0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; line-height:1.05; transition: color .25s ease; }
+  .channel h4 { margin:6px 0 0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; line-height:1.05; transition: color .25s ease; }
   .channel p { margin:0; font-size:12px; line-height:1.5; color:var(--ink-soft); transition: color .25s ease; }
   .channel .arrow { align-self:flex-start; font-size:13px; font-weight:600; color:var(--kings-red); transition: transform .2s ease; display:inline-block; }
 
@@ -334,13 +351,13 @@
     padding:64px 56px 36px; border-bottom:1px solid var(--rule);
     display:grid; grid-template-columns:1.5fr 1fr; gap:40px; align-items:end;
   }
-  .e-hero h1 { margin:0 0 14px; font-family:'Cormorant Garamond', serif; font-weight:500; font-size:64px; line-height:0.98; letter-spacing:-.012em; color:var(--ink); }
-  .e-hero h1 em { font-style:italic; color:var(--kings-red); }
+  .e-hero h1 { margin:0 0 14px; font-family:'Space Grotesk', system-ui, sans-serif; font-weight:600; font-size:64px; line-height:0.98; letter-spacing:-.012em; color:var(--ink); }
+  .e-hero h1 em { font-style:normal; color:var(--kings-red); }
   .e-hero .lede { font-size:14.5px; line-height:1.6; color:var(--ink-muted); max-width:520px; }
   .e-side { border-left:1px solid var(--rule); padding:8px 0 8px 28px; }
   .e-side .label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#666; font-weight:700; margin-bottom:8px; }
-  .e-side .total { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:38px; line-height:1; color:var(--ink); }
-  .e-side .total em { font-style:italic; color:var(--kings-red); }
+  .e-side .total { font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:38px; line-height:1; color:var(--ink); }
+  .e-side .total em { font-style:normal; color:var(--kings-red); }
   .e-side .meta { font-size:12px; color:var(--ink-soft); margin-top:6px; line-height:1.5; }
 
   .month-section { padding:48px 56px 36px; border-bottom:1px solid var(--rule); }
@@ -348,8 +365,8 @@
     display:flex; align-items:baseline; justify-content:space-between;
     padding-bottom:14px; border-bottom:2px solid var(--ink); margin-bottom:8px;
   }
-  .month-head h2 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:34px; letter-spacing:-.005em; color:var(--ink); line-height:1; }
-  .month-head h2 em { font-style:italic; color:var(--kings-red); }
+  .month-head h2 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:34px; letter-spacing:-.005em; color:var(--ink); line-height:1; }
+  .month-head h2 em { font-style:normal; color:var(--kings-red); }
   .month-head .count { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#666; font-weight:600; }
 
   .e-row {
@@ -360,15 +377,15 @@
   }
   .e-row:last-of-type { border-bottom:none; }
   .e-row:hover { background:var(--paper-warm); padding-left:14px; padding-right:14px; }
-  .e-date { font-family:'Cormorant Garamond',serif; font-weight:500; line-height:1; color:var(--ink); }
+  .e-date { font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; line-height:1; color:var(--ink); }
   .e-date .num { display:block; font-size:64px; letter-spacing:-.02em; transition:color .2s ease; }
   .e-date .day { display:block; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); font-family:'Inter',sans-serif; font-weight:600; margin-top:6px; }
   .e-row:hover .e-date .num { color:var(--kings-red); }
-  .e-event h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; line-height:1.1; color:var(--ink); letter-spacing:-.005em; }
-  .e-event h3 em { font-style:italic; color:var(--kings-red); }
+  .e-event h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; line-height:1.1; color:var(--ink); letter-spacing:-.005em; }
+  .e-event h3 em { font-style:normal; color:var(--kings-red); }
   .e-event .where { margin-top:6px; font-size:13px; color:var(--ink-soft); line-height:1.5; }
   .e-event .where strong { color:var(--ink); font-weight:600; }
-  .e-time { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--kings-red); line-height:1.1; text-align:right; white-space:nowrap; }
+  .e-time { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:22px; color:var(--kings-red); line-height:1.1; text-align:right; white-space:nowrap; }
   .e-time .sub { display:block; font-family:'Inter',sans-serif; font-style:normal; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#888; font-weight:600; margin-top:6px; }
   .e-tag {
     align-self:start; padding:4px 9px; border-radius:999px;
@@ -380,20 +397,20 @@
   .disclaimer {
     padding:30px 56px; background:var(--paper-warm); border-bottom:1px solid var(--rule);
     display:flex; align-items:center; gap:14px;
-    font-size:13px; color:var(--ink-soft); font-style:italic;
+    font-size:13px; color:var(--ink-soft); font-style:normal;
   }
   .disclaimer .icon {
     width:26px; height:26px; border-radius:50%; background:var(--kings-red); color:#fff;
     display:flex; align-items:center; justify-content:center; font-style:normal;
-    font-family:'Cormorant Garamond',serif; font-weight:600; flex:0 0 auto;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; flex:0 0 auto;
   }
 
   .archive {
     padding:48px 56px; border-bottom:1px solid var(--rule);
     display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;
   }
-  .archive .head h2 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:32px; letter-spacing:-.005em; line-height:1.05; }
-  .archive .head h2 em { font-style:italic; color:var(--kings-red); }
+  .archive .head h2 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:32px; letter-spacing:-.005em; line-height:1.05; }
+  .archive .head h2 em { font-style:normal; color:var(--kings-red); }
   .archive .head p { margin:0; font-size:13.5px; line-height:1.6; color:var(--ink-soft); max-width:380px; }
   .archive .links { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .archive .link {
@@ -403,7 +420,7 @@
   }
   .archive .link:hover { border-color:var(--ink); background:var(--ink); color:#fff; transform:translateY(-2px); }
   .archive .link .lab { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .archive .link h4 { margin:6px 0 4px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; color:var(--ink); transition: color .25s ease; }
+  .archive .link h4 { margin:6px 0 4px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:18px; color:var(--ink); transition: color .25s ease; }
   .archive .link:hover h4 { color:#fff; }
   .archive .link p { margin:0; font-size:11.5px; line-height:1.5; color:var(--ink-soft); transition: color .25s ease; }
   .archive .link:hover p { color:#bcbcbc; }
@@ -426,11 +443,11 @@
   }
   .ed-hero .kicker { margin-bottom:14px; }
   .ed-hero h1 {
-    margin:0 0 18px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 18px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:60px; line-height:0.98; letter-spacing:-.012em; color:var(--ink);
   }
-  .ed-hero h1 em { font-style:italic; color:var(--kings-red); }
-  .ed-hero .standfirst { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:21px; color:var(--ink-muted); margin:0 0 22px; line-height:1.35; max-width:580px; }
+  .ed-hero h1 em { font-style:normal; color:var(--kings-red); }
+  .ed-hero .standfirst { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:21px; color:var(--ink-muted); margin:0 0 22px; line-height:1.35; max-width:580px; }
 
   /* Standfirst override — Inter for these pages (per user direction) */
   [data-page="annual-lunch"]   .ed-hero .standfirst,
@@ -470,14 +487,14 @@
     background:var(--paper-warm); border:1px solid var(--rule); border-radius:6px;
     padding:24px; display:flex; flex-direction:column; gap:18px;
   }
-  .fact-card h4 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink); }
-  .fact-card h4 em { font-style:italic; color:var(--kings-red); }
+  .fact-card h4 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink); }
+  .fact-card h4 em { font-style:normal; color:var(--kings-red); }
   .fact-row { display:grid; grid-template-columns:90px 1fr; gap:14px; padding-bottom:12px; border-bottom:1px solid var(--rule); }
   .fact-row:last-child { border-bottom:none; padding-bottom:0; }
   .fact-row .lab { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; padding-top:2px; }
   .fact-row .val { font-size:13px; color:var(--ink); line-height:1.5; }
   .fact-row .val strong { color:var(--ink); font-weight:600; }
-  .fact-row .val em { font-style:italic; color:var(--kings-red); }
+  .fact-row .val em { font-style:normal; color:var(--kings-red); }
 
   .ed-section { padding:56px 56px; border-bottom:1px solid var(--rule); }
   .ed-section.alt { background:var(--paper-warm); }
@@ -485,10 +502,10 @@
   .ed-section.dark h2 { color:#fff; }
   .ed-section.dark p { color:#bcbcbc; }
   .ed-section h2 {
-    margin:0 0 22px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 22px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:36px; line-height:1.05; letter-spacing:-.005em; color:var(--ink);
   }
-  .ed-section h2 em { font-style:italic; color:var(--kings-red); }
+  .ed-section h2 em { font-style:normal; color:var(--kings-red); }
   .ed-prose { max-width:780px; }
   .ed-prose p { margin:0 0 16px; font-size:15px; line-height:1.65; color:var(--ink-muted); }
   .ed-prose p:last-child { margin-bottom:0; }
@@ -505,8 +522,8 @@
   .step:hover .step-num { color:var(--kings-red); }
   .step:hover h3 { color:#fff; }
   .step:hover p { color:#bcbcbc; }
-  .step-num { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:32px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
-  .step h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); transition: color .25s ease; }
+  .step-num { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:32px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
+  .step h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); transition: color .25s ease; }
   .step p { margin:0; font-size:13px; line-height:1.55; color:var(--ink-muted); transition: color .25s ease; }
 
   .pull-quote {
@@ -515,7 +532,7 @@
   }
   .pull-quote p {
     margin:0 auto; max-width:820px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:500;
     font-size:32px; line-height:1.2; letter-spacing:-.005em;
   }
   .pull-quote p strong { font-style:normal; font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.04em; text-transform:uppercase; font-size:22px; display:inline-block; margin-top:14px; }
@@ -523,8 +540,8 @@
   .roles { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); }
   .role { background:#fff; padding:28px 26px; }
   .role .role-tag { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:10px; }
-  .role h3 { margin:0 0 10px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:26px; color:var(--ink); }
-  .role h3 em { font-style:italic; color:var(--kings-red); }
+  .role h3 { margin:0 0 10px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:26px; color:var(--ink); }
+  .role h3 em { font-style:normal; color:var(--kings-red); }
   .role > p { margin:0 0 18px; font-size:14px; line-height:1.6; color:var(--ink-muted); }
   .sessions { margin:0; padding:0; list-style:none; border-top:1px solid var(--rule); }
   .sessions li {
@@ -532,11 +549,11 @@
     padding:12px 0; border-bottom:1px solid var(--rule); align-items:baseline;
   }
   .sessions li:last-child { border-bottom:none; }
-  .sessions .when { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--ink); }
+  .sessions .when { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:16px; color:var(--ink); }
   .sessions .what { font-size:13px; color:var(--ink-muted); line-height:1.5; }
   .role .role-meta {
     margin-top:18px; padding-top:14px; border-top:1px solid var(--rule);
-    font-size:12.5px; color:var(--ink-soft); font-style:italic;
+    font-size:12.5px; color:var(--ink-soft); font-style:normal;
   }
   .role .role-meta strong { color:var(--ink); font-style:normal; font-weight:600; }
 
@@ -546,14 +563,14 @@
     border-bottom:1px solid var(--kings-navy-border);
   }
   .cta-band .kicker { color:var(--kings-red-bright); margin-bottom:14px; }
-  .cta-band h2 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:36px; line-height:1.05; color:#fff; }
-  .cta-band h2 em { font-style:italic; color:var(--kings-red-bright); }
+  .cta-band h2 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:36px; line-height:1.05; color:#fff; }
+  .cta-band h2 em { font-style:normal; color:var(--kings-red-bright); }
   .cta-band p { margin:0; font-size:14px; color:#cbd4e1; line-height:1.6; max-width:520px; }
   .cta-actions { display:flex; flex-direction:column; gap:10px; }
   .cta-band .ed-btn.ghost { border-color:#2a4870; color:#fff; }
   .cta-band .ed-btn.ghost:hover { background:#fff; border-color:#fff; color:var(--kings-navy) !important; }
   .cta-band .email {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--kings-red-bright);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px; color:var(--kings-red-bright);
     border-bottom:1px solid #FF4F4355; transition: border-color .2s ease;
   }
   .cta-band .email:hover { border-bottom-color:var(--kings-red-bright); }
@@ -561,7 +578,7 @@
   .travel { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); }
   .travel-card { background:#fff; padding:24px; display:flex; flex-direction:column; gap:8px; }
   .travel-card .lab { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .travel-card h4 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); }
+  .travel-card h4 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); }
   .travel-card p { margin:6px 0 0; font-size:13px; line-height:1.55; color:var(--ink-muted); }
   .travel-card .tag { display:inline-block; background:var(--paper-warm); border:1px solid var(--rule); padding:3px 8px; border-radius:4px; font-size:11px; color:var(--ink); margin-right:6px; }
 
@@ -574,7 +591,7 @@
   }
   .map-strip .pin {
     background:var(--kings-red); color:#fff; padding:10px 14px; border-radius:6px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; box-shadow:0 6px 18px rgba(211,35,26,.35);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; box-shadow:0 6px 18px rgba(211,35,26,.35);
   }
   .map-strip .pin::before {
     content:""; position:absolute; left:50%; top:calc(50% + 22px); width:8px; height:8px; background:var(--kings-red);
@@ -589,14 +606,14 @@
   }
   .next-up .row:hover { padding-left:14px; padding-right:14px; background:var(--paper-warm); }
   .next-up .left .lab { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .next-up .left h3 { margin:6px 0 4px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:28px; color:var(--ink); }
-  .next-up .left h3 em { font-style:italic; color:var(--kings-red); }
+  .next-up .left h3 { margin:6px 0 4px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:28px; color:var(--ink); }
+  .next-up .left h3 em { font-style:normal; color:var(--kings-red); }
   .next-up .left .where { font-size:13px; color:var(--ink-soft); }
   .next-up .when {
-    font-family:'Cormorant Garamond',serif; font-weight:500; font-size:42px; color:var(--ink); line-height:1; text-align:right;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:42px; color:var(--ink); line-height:1; text-align:right;
   }
   .next-up .when em { display:block; font-family:'Inter',sans-serif; font-weight:600; font-style:normal; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin-top:4px; }
-  .next-up .arrow { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:24px; color:var(--kings-red); transition: transform .2s ease; }
+  .next-up .arrow { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:24px; color:var(--kings-red); transition: transform .2s ease; }
   .next-up .row:hover .arrow { transform:translateX(4px); }
 
   /* === Bulletin Page === */
@@ -605,17 +622,17 @@
     display:grid; grid-template-columns:1.5fr 1fr; gap:48px; align-items:end;
   }
   .b-hero h1 {
-    margin:0 0 16px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 16px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:64px; line-height:0.98; letter-spacing:-.012em; color:var(--ink);
   }
-  .b-hero h1 em { font-style:italic; color:var(--kings-red); }
+  .b-hero h1 em { font-style:normal; color:var(--kings-red); }
   .b-hero .lede { font-size:14.5px; line-height:1.6; color:var(--ink-muted); max-width:560px; }
   .b-hero-side {
     border-left:1px solid var(--rule); padding:8px 0 8px 28px;
   }
   .b-hero-side .label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#666; font-weight:700; margin-bottom:8px; }
-  .b-hero-side .total { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:32px; line-height:1.05; color:var(--ink); }
-  .b-hero-side .total em { font-style:italic; color:var(--kings-red); }
+  .b-hero-side .total { font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:32px; line-height:1.05; color:var(--ink); }
+  .b-hero-side .total em { font-style:normal; color:var(--kings-red); }
   .b-hero-side .meta { font-size:12px; color:var(--ink-soft); margin-top:6px; line-height:1.5; }
 
   /* Featured issue */
@@ -625,8 +642,8 @@
     background:var(--paper-warm);
   }
   .b-feature .meta-kicker { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:12px; }
-  .b-feature h2 { margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:48px; line-height:1; letter-spacing:-.01em; color:var(--ink); }
-  .b-feature h2 em { font-style:italic; color:var(--kings-red); }
+  .b-feature h2 { margin:0 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:48px; line-height:1; letter-spacing:-.01em; color:var(--ink); }
+  .b-feature h2 em { font-style:normal; color:var(--kings-red); }
   .b-feature .issue-meta {
     display:flex; gap:18px; margin-bottom:18px; font-size:12px; color:var(--ink-soft); flex-wrap:wrap;
   }
@@ -651,17 +668,17 @@
   .cover-placeholder:hover { transform:translateY(-4px) rotate(-1deg); box-shadow:0 40px 80px -25px rgba(13,13,13,.45), 0 14px 28px -12px rgba(13,13,13,.25); }
   .cover-placeholder .badge {
     background:var(--kings-red); color:#fff; padding:6px 9px;
-    font-family:'Cormorant Garamond',serif; align-self:flex-start;
+    font-family:'Space Grotesk',system-ui,sans-serif; align-self:flex-start;
     font-size:11px; line-height:1; font-weight:600;
   }
-  .cover-placeholder .badge em { font-style:italic; }
+  .cover-placeholder .badge em { font-style:normal; }
   .cover-placeholder .badge .l2 { display:block; font-style:normal; font-family:'Inter',sans-serif; font-size:8px; letter-spacing:.18em; text-transform:uppercase; margin-top:2px; }
   .cover-placeholder .title-area { flex:1; display:flex; align-items:center; justify-content:center; padding:18px 0; }
   .cover-placeholder .title-area h3 {
-    margin:0; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:34px; line-height:0.95; color:var(--ink); text-align:center; letter-spacing:-.01em;
   }
-  .cover-placeholder .title-area h3 em { font-style:italic; color:var(--kings-red); }
+  .cover-placeholder .title-area h3 em { font-style:normal; color:var(--kings-red); }
   .cover-placeholder .footer-bar {
     display:flex; justify-content:space-between; align-items:flex-end;
     font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); font-weight:600;
@@ -670,7 +687,7 @@
   .cover-placeholder .placeholder-watermark {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     pointer-events:none; opacity:0.06;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:48px; transform:rotate(-15deg); color:var(--ink);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:48px; transform:rotate(-15deg); color:var(--ink);
   }
   .cover-placeholder .empty-tag {
     position:absolute; top:14px; right:14px;
@@ -685,22 +702,22 @@
   }
   .editor-note .label-col .kicker { margin-bottom:8px; }
   .editor-note .label-col h2 {
-    margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:32px; line-height:1.05; letter-spacing:-.005em; color:var(--ink);
   }
-  .editor-note .label-col h2 em { font-style:italic; color:var(--kings-red); }
+  .editor-note .label-col h2 em { font-style:normal; color:var(--kings-red); }
   .editor-note .label-col p { margin:0; font-size:13px; color:var(--ink-soft); line-height:1.6; max-width:300px; }
   .editor-note .quote {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:400;
     font-size:23px; line-height:1.45; color:var(--ink); max-width:680px;
   }
   .editor-note .quote p { margin:0 0 18px; }
   .editor-note .quote p:last-child { margin-bottom:0; }
-  .editor-note .quote a { color:var(--kings-red); border-bottom:1px solid #D3231A33; transition: border-color .2s ease; font-style:italic; }
+  .editor-note .quote a { color:var(--kings-red); border-bottom:1px solid #D3231A33; transition: border-color .2s ease; font-style:normal; }
   .editor-note .quote a:hover { border-bottom-color:var(--kings-red); }
   .editor-note .signature { margin-top:24px; padding-top:18px; border-top:1px solid var(--rule); }
   .editor-note .signature .name {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:24px; color:var(--ink); display:block;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:24px; color:var(--ink); display:block;
   }
   .editor-note .signature .role {
     font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-top:4px; display:block;
@@ -713,12 +730,12 @@
     border-bottom:1px solid var(--kings-navy-border);
   }
   .contribute .kicker { color:var(--kings-red-bright); margin-bottom:12px; }
-  .contribute h2 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:36px; line-height:1.05; color:#fff; }
-  .contribute h2 em { font-style:italic; color:var(--kings-red-bright); }
+  .contribute h2 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:36px; line-height:1.05; color:#fff; }
+  .contribute h2 em { font-style:normal; color:var(--kings-red-bright); }
   .contribute p { margin:0; font-size:14px; color:#cbd4e1; line-height:1.6; max-width:520px; }
   .contribute .cta-actions { display:flex; flex-direction:column; gap:10px; }
   .contribute .email {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--kings-red-bright);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px; color:var(--kings-red-bright);
     border-bottom:1px solid #FF4F4355; transition: border-color .2s ease;
   }
   .contribute .email:hover { border-bottom-color:var(--kings-red-bright); }
@@ -730,8 +747,8 @@
   .archive-issues .head {
     display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:30px;
   }
-  .archive-issues .head h2 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:36px; letter-spacing:-.005em; color:var(--ink); }
-  .archive-issues .head h2 em { font-style:italic; color:var(--kings-red); }
+  .archive-issues .head h2 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:36px; letter-spacing:-.005em; color:var(--ink); }
+  .archive-issues .head h2 em { font-style:normal; color:var(--kings-red); }
   .archive-issues .head p { margin:0; font-size:13px; color:var(--ink-soft); max-width:360px; line-height:1.6; }
   .issue-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
   .issue-card { display:flex; flex-direction:column; gap:12px; cursor:pointer; }
@@ -745,12 +762,12 @@
   .issue-card:hover .cover-mini { transform:translateY(-3px) rotate(-0.5deg); box-shadow:0 24px 40px -16px rgba(13,13,13,.4); }
   .issue-card .cover-mini .badge {
     background:var(--kings-red); color:#fff; padding:3px 5px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; line-height:1; align-self:flex-start;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:9px; line-height:1; align-self:flex-start;
   }
   .issue-card .cover-mini .ttl {
-    font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; line-height:0.95; text-align:center; color:var(--ink); padding:0 4px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:18px; line-height:0.95; text-align:center; color:var(--ink); padding:0 4px;
   }
-  .issue-card .cover-mini .ttl em { font-style:italic; color:var(--kings-red); }
+  .issue-card .cover-mini .ttl em { font-style:normal; color:var(--kings-red); }
   .issue-card .cover-mini .vol {
     font-size:7.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); font-weight:600;
     border-top:1px solid var(--rule); padding-top:6px; text-align:center;
@@ -760,8 +777,8 @@
     padding:2px 5px; border-radius:2px; font-size:7.5px; letter-spacing:.16em; font-weight:700; text-transform:uppercase;
   }
   .issue-card .info .label { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .issue-card .info h4 { margin:4px 0 2px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; color:var(--ink); }
-  .issue-card .info h4 em { font-style:italic; color:var(--kings-red); }
+  .issue-card .info h4 { margin:4px 0 2px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:18px; color:var(--ink); }
+  .issue-card .info h4 em { font-style:normal; color:var(--kings-red); }
   .issue-card .info .pdf-link { font-size:11.5px; color:var(--ink-soft); display:inline-flex; align-items:center; gap:6px; margin-top:2px; transition: color .2s ease; }
   .issue-card:hover .info .pdf-link { color:var(--kings-red); }
 
@@ -780,10 +797,10 @@
     background:var(--kings-red); border:3px solid #fff; box-shadow:0 0 0 1px var(--rule);
   }
   .timeline .tl-time {
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal;
     font-size:22px; color:var(--kings-red); line-height:1; display:block; margin-bottom:6px;
   }
-  .timeline .tl-title { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); display:block; margin-bottom:4px; line-height:1.15; }
+  .timeline .tl-title { font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); display:block; margin-bottom:4px; line-height:1.15; }
   .timeline .tl-body { font-size:13.5px; color:var(--ink-muted); line-height:1.55; max-width:560px; }
 
   /* === Annual Lunch — Pricing tiers === */
@@ -799,12 +816,12 @@
   .price-tier:hover .price { color:var(--kings-red); }
   .price-tier:hover .who { color:#bcbcbc; }
   .tier-tag { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; transition: color .25s ease; }
-  .price-tier h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink); transition: color .25s ease; }
+  .price-tier h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink); transition: color .25s ease; }
   .price-tier .price {
-    font-family:'Cormorant Garamond',serif; font-weight:500; font-size:48px; line-height:1; color:var(--ink);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:48px; line-height:1; color:var(--ink);
     margin-top:4px; transition: color .25s ease;
   }
-  .price-tier .price em { font-style:italic; color:var(--kings-red); transition: color .25s ease; }
+  .price-tier .price em { font-style:normal; color:var(--kings-red); transition: color .25s ease; }
   .price-tier .price .unit { font-family:'Inter',sans-serif; font-size:12px; font-weight:600; letter-spacing:.06em; color:var(--ink-soft); margin-left:6px; text-transform:uppercase; }
   .price-tier .who { font-size:13px; color:var(--ink-muted); line-height:1.55; margin-top:6px; transition: color .25s ease; }
 
@@ -814,20 +831,20 @@
     display:grid; grid-template-columns:1fr 2fr; gap:32px; align-items:center;
   }
   .find-contemp .lhs .label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:8px; }
-  .find-contemp .lhs h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:26px; line-height:1.05; color:var(--ink); }
-  .find-contemp .lhs h3 em { font-style:italic; color:var(--kings-red); }
+  .find-contemp .lhs h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:26px; line-height:1.05; color:var(--ink); }
+  .find-contemp .lhs h3 em { font-style:normal; color:var(--kings-red); }
   .find-contemp .rhs p { margin:0 0 10px; font-size:14px; line-height:1.6; color:var(--ink-muted); }
   .find-contemp .rhs p:last-child { margin-bottom:0; }
   .find-contemp .rhs code {
-    font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--kings-red);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; color:var(--kings-red);
     background:#fff; padding:2px 7px; border:1px solid #f4d4d2; border-radius:3px; font-size:14px;
   }
 
   /* === Annual Lunch — Travel transit list === */
   .transit { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); }
   .transit-col { background:#fff; padding:24px 26px; }
-  .transit-col h4 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); }
-  .transit-col h4 em { font-style:italic; color:var(--kings-red); }
+  .transit-col h4 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); }
+  .transit-col h4 em { font-style:normal; color:var(--kings-red); }
   .transit-list { margin:0; padding:0; list-style:none; }
   .transit-list li {
     display:grid; grid-template-columns:1fr auto; gap:14px;
@@ -836,7 +853,7 @@
   .transit-list li:first-child { border-top:none; }
   .transit-list .stop { font-size:13px; color:var(--ink); }
   .transit-list .stop em { font-style:normal; color:var(--ink-soft); font-size:11.5px; display:block; margin-top:1px; }
-  .transit-list .walk { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--kings-red); white-space:nowrap; }
+  .transit-list .walk { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; color:var(--kings-red); white-space:nowrap; }
   .transit-col .bus-line { font-size:13px; line-height:1.55; color:var(--ink-muted); margin-top:10px; }
   .transit-col .bus-line a { color:var(--kings-red); font-weight:600; border-bottom:1px solid #D3231A33; transition: border-color .2s ease, background-color .2s ease; }
   .transit-col .bus-line a:hover { border-bottom-color:var(--kings-red); background:#D3231A14; }
@@ -844,7 +861,7 @@
   /* === Footnote === */
   .footnote {
     padding:18px 56px; background:var(--paper-warm); border-bottom:1px solid var(--rule);
-    font-size:11.5px; color:var(--ink-soft); font-style:italic; line-height:1.6;
+    font-size:11.5px; color:var(--ink-soft); font-style:normal; line-height:1.6;
   }
   .footnote strong { font-style:normal; color:var(--kings-red); font-weight:700; }
 
@@ -871,21 +888,21 @@
   .speaker .portrait .pmark {
     position:absolute; top:14px; left:14px;
     background:var(--kings-red); color:#fff; padding:5px 8px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; line-height:1; font-weight:600;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:11px; line-height:1; font-weight:600;
   }
   .speaker .portrait .pname {
     position:absolute; bottom:0; left:0; right:0;
     background:rgba(13,13,13,.85); color:#fff; padding:14px 16px; backdrop-filter:blur(6px);
   }
-  .speaker .portrait .pname .nm { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; line-height:1; display:block; }
-  .speaker .portrait .pname .nm em { font-style:italic; color:var(--kings-red); }
+  .speaker .portrait .pname .nm { font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; line-height:1; display:block; }
+  .speaker .portrait .pname .nm em { font-style:normal; color:var(--kings-red); }
   .speaker .portrait .pname .role { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#bcbcbc; font-weight:600; margin-top:6px; display:block; }
   .speaker .bio .kicker { margin-bottom:8px; }
   .speaker .bio h3 {
-    margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:32px; line-height:1.05; letter-spacing:-.005em; color:var(--ink);
   }
-  .speaker .bio h3 em { font-style:italic; color:var(--kings-red); }
+  .speaker .bio h3 em { font-style:normal; color:var(--kings-red); }
   .speaker .bio p { margin:0 0 14px; font-size:14.5px; line-height:1.65; color:var(--ink-muted); }
   .speaker .bio p:last-of-type { margin-bottom:0; }
   .speaker .bio .creds {
@@ -903,15 +920,15 @@
   }
   .lecture-title .badge-lab {
     background:var(--kings-red); color:#fff; padding:8px 12px;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; font-weight:600; line-height:1;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; font-weight:600; line-height:1;
     align-self:start;
   }
   .lecture-title h2 {
-    margin:0 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:46px; line-height:1.02; letter-spacing:-.012em; color:var(--ink);
   }
-  .lecture-title h2 em { font-style:italic; color:var(--kings-red); }
-  .lecture-title .by { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--ink-soft); }
+  .lecture-title h2 em { font-style:normal; color:var(--kings-red); }
+  .lecture-title .by { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px; color:var(--ink-soft); }
   .lecture-title .by strong { font-style:normal; color:var(--ink); font-weight:500; }
 
   /* === Annual Lecture — historical aside === */
@@ -920,8 +937,8 @@
     display:grid; grid-template-columns:1fr 2fr; gap:32px; align-items:start;
   }
   .history-aside .lhs .lab { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:8px; }
-  .history-aside .lhs h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; line-height:1.05; color:var(--ink); }
-  .history-aside .lhs h3 em { font-style:italic; color:var(--kings-red); }
+  .history-aside .lhs h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; line-height:1.05; color:var(--ink); }
+  .history-aside .lhs h3 em { font-style:normal; color:var(--kings-red); }
   .history-aside .rhs p { margin:0 0 10px; font-size:13.5px; line-height:1.6; color:var(--ink-muted); }
   .history-aside .rhs p:last-child { margin-bottom:0; }
   .history-aside .rhs strong { color:var(--ink); font-weight:600; }
@@ -935,11 +952,11 @@
   .arrival .icon {
     width:38px; height:38px; border-radius:50%; background:var(--kings-red); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-size:20px; font-weight:600;
   }
   .arrival .text { font-size:14px; line-height:1.55; color:var(--ink); }
   .arrival .text strong { font-weight:600; color:var(--ink); }
-  .arrival .text em { font-style:italic; color:var(--kings-red); }
+  .arrival .text em { font-style:normal; color:var(--kings-red); }
 
   /* === Committee — Roster grid === */
   .roster-group { padding:48px 56px 12px; border-bottom:1px solid var(--rule); }
@@ -950,10 +967,10 @@
     padding-bottom:18px; border-bottom:2px solid var(--ink); margin-bottom:24px;
   }
   .roster-head h2 {
-    margin:0; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:30px; line-height:1; letter-spacing:-.005em; color:var(--ink);
   }
-  .roster-head h2 em { font-style:italic; color:var(--kings-red); }
+  .roster-head h2 em { font-style:normal; color:var(--kings-red); }
   .roster-head .desc { font-size:13px; color:var(--ink-soft); max-width:380px; line-height:1.55; }
   .roster-head .count { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#666; font-weight:600; }
 
@@ -985,7 +1002,7 @@
     width:100%; aspect-ratio:1; max-width:224px;
     background:var(--kings-red); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:64px; line-height:1;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:600; font-size:64px; line-height:1;
     border-radius:4px; overflow:hidden;
     transition: background-color .25s ease, color .25s ease, border-color .25s ease;
     position:relative;
@@ -995,24 +1012,30 @@
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
   .person.vacancy .avatar { background:transparent; color:var(--ink-soft); border:1px dashed var(--rule); font-style:normal; font-size:72px; }
   .person h3 {
-    margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px;
+    margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px;
     line-height:1.05; color:var(--ink); letter-spacing:-.005em; transition: color .25s ease;
   }
-  .person h3 em { font-style:italic; color:var(--kings-red); }
-  .person.vacancy h3 { font-style:italic; color:var(--ink-soft); }
+  .person h3 em { font-style:normal; color:var(--kings-red); }
+  .person.vacancy h3 { font-style:normal; color:var(--ink-soft); }
   .person .program {
     margin-top:6px; font-size:12px; line-height:1.35; color:var(--ink-muted);
     transition: color .25s ease;
   }
   .person .program em {
-    font-style:italic; color:var(--kings-red);
-    font-family:'Cormorant Garamond',serif; font-size:13px;
+    font-style:normal; color:var(--kings-red);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px;
   }
   .person .years {
     margin-top:3px; font-size:11.5px; color:var(--ink-soft); transition: color .25s ease;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:13px;
   }
   .person .years strong { font-style:normal; font-family:'Inter',sans-serif; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-right:6px; }
+  .person .bio {
+    margin-top:12px; padding-top:12px; border-top:1px solid var(--rule);
+    font-family:'Inter',system-ui,sans-serif; font-size:12.5px; line-height:1.55;
+    color:var(--ink-soft); transition: color .25s ease, border-color .25s ease;
+  }
+  .person:hover .bio { color:#cbd4e1; border-top-color:rgba(255,255,255,.14); }
   .person.vacancy .vac-cta {
     margin-top:auto; font-size:12px; color:var(--kings-red); font-weight:600; padding-top:8px; border-top:1px solid var(--rule);
     transition: color .25s ease;
@@ -1026,8 +1049,8 @@
     border-bottom:1px solid var(--kings-navy-border);
   }
   .recruit .kicker { color:var(--kings-red-bright); margin-bottom:14px; }
-  .recruit h2 { margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:42px; line-height:1.05; color:#fff; }
-  .recruit h2 em { font-style:italic; color:var(--kings-red-bright); }
+  .recruit h2 { margin:0 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:42px; line-height:1.05; color:#fff; }
+  .recruit h2 em { font-style:normal; color:var(--kings-red-bright); }
   .recruit p { margin:0 0 8px; font-size:14px; color:#cbd4e1; line-height:1.65; max-width:560px; }
   .recruit p:last-of-type { margin-bottom:0; }
   .recruit .areas {
@@ -1037,10 +1060,10 @@
     background:#0a3060; border:1px solid var(--kings-navy-border); padding:5px 10px; border-radius:999px;
     font-size:11.5px; color:#cbd4e1;
   }
-  .recruit .area-pill em { font-style:italic; color:var(--kings-red-bright); }
+  .recruit .area-pill em { font-style:normal; color:var(--kings-red-bright); }
   .recruit .cta-actions { display:flex; flex-direction:column; gap:10px; }
   .recruit .email {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--kings-red-bright);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px; color:var(--kings-red-bright);
     border-bottom:1px solid #FF4F4355; transition: border-color .2s ease;
   }
   .recruit .email:hover { border-bottom-color:var(--kings-red-bright); }
@@ -1052,8 +1075,8 @@
     padding:48px 56px; border-bottom:1px solid var(--rule);
     display:grid; grid-template-columns:1fr 2fr; gap:40px; align-items:start;
   }
-  .gov-docs .head h2 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:30px; line-height:1.05; color:var(--ink); }
-  .gov-docs .head h2 em { font-style:italic; color:var(--kings-red); }
+  .gov-docs .head h2 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:30px; line-height:1.05; color:var(--ink); }
+  .gov-docs .head h2 em { font-style:normal; color:var(--kings-red); }
   .gov-docs .head p { margin:0; font-size:13.5px; color:var(--ink-soft); line-height:1.6; max-width:340px; }
   .gov-docs .links { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .gov-doc {
@@ -1065,8 +1088,8 @@
   }
   .gov-doc:hover { border-color:var(--ink); background:var(--ink); color:#fff; transform:translateY(-2px); }
   .gov-doc .lbl { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .gov-doc h4 { margin:4px 0 0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); transition: color .25s ease; }
-  .gov-doc h4 em { font-style:italic; color:var(--kings-red); }
+  .gov-doc h4 { margin:4px 0 0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); transition: color .25s ease; }
+  .gov-doc h4 em { font-style:normal; color:var(--kings-red); }
   .gov-doc:hover h4 { color:#fff; }
   .gov-doc p { margin:0; font-size:12px; line-height:1.5; color:var(--ink-soft); transition: color .25s ease; }
   .gov-doc:hover p { color:#bcbcbc; }
@@ -1078,8 +1101,8 @@
     padding:64px 56px; border-bottom:1px solid var(--rule);
     background:linear-gradient(180deg, #fff 0%, var(--paper-warm) 100%);
   }
-  .heritage h2 { margin:0 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:36px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
-  .heritage h2 em { font-style:italic; color:var(--kings-red); }
+  .heritage h2 { margin:0 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:36px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
+  .heritage h2 em { font-style:normal; color:var(--kings-red); }
   .heritage .desc { font-size:13.5px; color:var(--ink-soft); max-width:540px; margin:0 0 36px; line-height:1.55; }
   .milestones {
     display:grid; grid-template-columns:repeat(6, 1fr); gap:0;
@@ -1100,10 +1123,10 @@
   .milestone:hover::before { transform:scale(1.2); }
   .milestone .year {
     margin-top:54px; display:block;
-    font-family:'Cormorant Garamond',serif; font-weight:500; font-size:36px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:36px;
     line-height:1; color:var(--ink); letter-spacing:-.01em;
   }
-  .milestone .year em { font-style:italic; color:var(--kings-red); }
+  .milestone .year em { font-style:normal; color:var(--kings-red); }
   .milestone .what {
     margin-top:8px; font-size:12.5px; line-height:1.5; color:var(--ink-muted);
     max-width:170px;
@@ -1125,9 +1148,9 @@
   .pillar:hover h3 { color:#fff; }
   .pillar:hover p { color:#bcbcbc; }
   .pillar:hover .pill-num { color:var(--kings-red); }
-  .pillar .pill-num { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:30px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
-  .pillar h3 { margin:8px 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; color:var(--ink); transition: color .25s ease; }
-  .pillar h3 em { font-style:italic; color:var(--kings-red); }
+  .pillar .pill-num { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:30px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
+  .pillar h3 { margin:8px 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; color:var(--ink); transition: color .25s ease; }
+  .pillar h3 em { font-style:normal; color:var(--kings-red); }
   .pillar p { margin:0; font-size:13.5px; line-height:1.6; color:var(--ink-muted); transition: color .25s ease; flex:1; }
 
   /* === About — Three anchor events === */
@@ -1148,21 +1171,21 @@
   .term-card.spring .top { background:linear-gradient(135deg,#3a5a3a 0%,#1a3a1a 100%); color:#fff; }
   .term-card.summer .top { background:linear-gradient(135deg,#D3231A 0%,#7a0f08 100%); color:#fff; }
   .term-card .top .term-tag {
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal;
     font-size:32px; line-height:1; font-weight:500;
   }
   .term-card .body { padding:18px 18px 22px; }
   .term-card .lab { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .term-card h4 { margin:6px 0 6px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink); line-height:1.05; }
-  .term-card h4 em { font-style:italic; color:var(--kings-red); }
+  .term-card h4 { margin:6px 0 6px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink); line-height:1.05; }
+  .term-card h4 em { font-style:normal; color:var(--kings-red); }
   .term-card p { margin:0; font-size:13px; line-height:1.55; color:var(--ink-muted); }
 
   /* === About — King's Engineering today (split block) === */
   .today {
     padding:64px 56px; border-bottom:1px solid var(--rule);
   }
-  .today h2 { margin:0 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:38px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
-  .today h2 em { font-style:italic; color:var(--kings-red); }
+  .today h2 { margin:0 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:38px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
+  .today h2 em { font-style:normal; color:var(--kings-red); }
   .today .desc { font-size:14.5px; color:var(--ink-muted); max-width:620px; margin:0 0 36px; line-height:1.6; }
   .today-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); }
   .today-block {
@@ -1175,10 +1198,10 @@
   .today-block:hover p { color:#bcbcbc; }
   .today-block:hover .established { color:var(--kings-red); }
   .today-block .lab { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .today-block h3 { margin:8px 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:26px; line-height:1.05; color:var(--ink); transition: color .25s ease; }
-  .today-block h3 em { font-style:italic; color:var(--kings-red); }
+  .today-block h3 { margin:8px 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:26px; line-height:1.05; color:var(--ink); transition: color .25s ease; }
+  .today-block h3 em { font-style:normal; color:var(--kings-red); }
   .today-block p { margin:0 0 12px; font-size:13.5px; line-height:1.6; color:var(--ink-muted); transition: color .25s ease; }
-  .today-block .established { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--ink-soft); transition: color .25s ease; }
+  .today-block .established { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; color:var(--ink-soft); transition: color .25s ease; }
   .today-block .established strong { color:var(--ink); font-style:normal; font-weight:600; }
 
   /* === About — Sub-pages grid === */
@@ -1188,8 +1211,8 @@
   .subpages .head {
     display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:30px;
   }
-  .subpages .head h2 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:34px; letter-spacing:-.005em; color:var(--ink); }
-  .subpages .head h2 em { font-style:italic; color:var(--kings-red); }
+  .subpages .head h2 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:34px; letter-spacing:-.005em; color:var(--ink); }
+  .subpages .head h2 em { font-style:normal; color:var(--kings-red); }
   .subpages .head p { margin:0; font-size:13px; color:var(--ink-soft); max-width:340px; line-height:1.6; }
   .sub-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
   .sub-card {
@@ -1201,8 +1224,8 @@
   }
   .sub-card:hover { border-color:var(--ink); background:var(--ink); color:#fff; transform:translateY(-2px); }
   .sub-card .lbl { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .sub-card h4 { margin:4px 0 4px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:20px; color:var(--ink); transition: color .25s ease; }
-  .sub-card h4 em { font-style:italic; color:var(--kings-red); }
+  .sub-card h4 { margin:4px 0 4px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:20px; color:var(--ink); transition: color .25s ease; }
+  .sub-card h4 em { font-style:normal; color:var(--kings-red); }
   .sub-card:hover h4 { color:#fff; }
   .sub-card p { margin:0; font-size:12px; line-height:1.5; color:var(--ink-soft); flex:1; transition: color .25s ease; }
   .sub-card:hover p { color:#bcbcbc; }
@@ -1219,8 +1242,8 @@
     padding:36px 36px 32px;
   }
   .form-card .form-kicker { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:8px; }
-  .form-card h2 { margin:0 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:32px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
-  .form-card h2 em { font-style:italic; color:var(--kings-red); }
+  .form-card h2 { margin:0 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:32px; line-height:1; letter-spacing:-.005em; color:var(--ink); }
+  .form-card h2 em { font-style:normal; color:var(--kings-red); }
   .form-card .form-lede { margin:0 0 24px; font-size:14px; color:var(--ink-soft); line-height:1.6; }
 
   .field { display:flex; flex-direction:column; margin-bottom:16px; }
@@ -1247,7 +1270,7 @@
     background-repeat:no-repeat; background-position:right 14px center; padding-right:36px;
   }
   .field .help { font-size:11.5px; color:var(--ink-soft); margin-top:6px; }
-  .field .counter { margin-left:auto; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--ink-soft); }
+  .field .counter { margin-left:auto; font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:13px; color:var(--ink-soft); }
   .label-row { display:flex; align-items:baseline; }
 
   .privacy-note {
@@ -1259,7 +1282,7 @@
   .privacy-note .icon {
     flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--kings-red); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:12px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:600; font-size:12px;
   }
   .privacy-note strong { color:var(--ink); font-weight:600; }
   .privacy-note a { color:var(--kings-red); font-weight:600; border-bottom:1px solid #D3231A33; transition: border-color .2s ease; }
@@ -1274,14 +1297,14 @@
   }
   .form-submit button:hover { background:var(--ink); transform:translateY(-1px); }
   .form-submit .reset {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--ink-soft);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; color:var(--ink-soft);
     background:none; border:none; cursor:pointer; transition: color .2s ease;
   }
   .form-submit .reset:hover { color:var(--kings-red); }
 
   /* Contact sidebar (direct emails) */
-  .contact-side h3 { margin:0 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; color:var(--ink); }
-  .contact-side h3 em { font-style:italic; color:var(--kings-red); }
+  .contact-side h3 { margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; color:var(--ink); }
+  .contact-side h3 em { font-style:normal; color:var(--kings-red); }
   .contact-side .lede { font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:18px; }
   .channel-list { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
   .channel-link {
@@ -1291,7 +1314,7 @@
   }
   .channel-link:hover { border-color:var(--ink); background:var(--ink); color:#fff; transform:translateY(-2px); }
   .channel-link .for { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .channel-link .addr { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--ink); transition: color .25s ease; }
+  .channel-link .addr { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px; color:var(--ink); transition: color .25s ease; }
   .channel-link:hover .addr { color:#fff; }
   .channel-link .note { font-size:11.5px; color:var(--ink-soft); transition: color .25s ease; }
   .channel-link:hover .note { color:#bcbcbc; }
@@ -1319,7 +1342,7 @@
   .criteria .what { font-size:14px; color:var(--ink); line-height:1.55; }
   .criteria .what strong { font-weight:600; }
   .criteria .weight {
-    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal;
     font-size:24px; color:var(--kings-red); text-align:right; line-height:1;
   }
 
@@ -1333,7 +1356,7 @@
     font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700;
   }
   .winners-band h4 {
-    margin:6px 0 8px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; color:var(--ink);
+    margin:6px 0 8px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:18px; color:var(--ink);
   }
   .winners-band ul { margin:0; padding:0; list-style:none; }
   .winners-band li {
@@ -1341,7 +1364,7 @@
     border-top:1px dashed var(--rule);
   }
   .winners-band li:first-child { border-top:none; }
-  .winners-band li strong { color:var(--ink); font-weight:600; font-style:italic; font-family:'Cormorant Garamond',serif; font-size:15px; margin-right:8px; }
+  .winners-band li strong { color:var(--ink); font-weight:600; font-style:normal; font-family:'Space Grotesk',system-ui,sans-serif; font-size:15px; margin-right:8px; }
 
   /* Constitution Table of contents */
   .toc {
@@ -1349,8 +1372,8 @@
     padding:24px 26px; margin-bottom:36px;
   }
   .toc .lab { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; margin-bottom:12px; }
-  .toc h3 { margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink); }
-  .toc h3 em { font-style:italic; color:var(--kings-red); }
+  .toc h3 { margin:0 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink); }
+  .toc h3 em { font-style:normal; color:var(--kings-red); }
   .toc ol { margin:0; padding:0; list-style:none; counter-reset:toc; columns:2; column-gap:24px; }
   .toc li {
     counter-increment:toc;
@@ -1359,7 +1382,7 @@
   }
   .toc li::before {
     content:counter(toc, decimal-leading-zero);
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--kings-red);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; color:var(--kings-red);
     flex:0 0 auto;
   }
 
@@ -1367,12 +1390,12 @@
   .const-section { margin-bottom:36px; }
   .const-section h2 {
     display:flex; align-items:baseline; gap:14px;
-    margin:0 0 16px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 16px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:26px; line-height:1.1; color:var(--ink); letter-spacing:-.005em;
     padding-bottom:8px; border-bottom:2px solid var(--ink);
   }
   .const-section h2 .num {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--kings-red); flex:0 0 auto;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:22px; color:var(--kings-red); flex:0 0 auto;
   }
   .const-section h3 {
     margin:18px 0 10px; font-family:'Inter',sans-serif; font-size:12px;
@@ -1395,10 +1418,10 @@
   .trophy-winner:hover h3 { color:#fff; }
   .trophy-winner:hover p { color:#bcbcbc; }
   .trophy-winner:hover .yr { color:var(--kings-red); }
-  .trophy-winner .yr { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:36px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
-  .trophy-winner h3 { margin:0; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; line-height:1.1; color:var(--ink); transition: color .25s ease; }
-  .trophy-winner h3 em { font-style:italic; color:var(--kings-red); }
-  .trophy-winner .who { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--ink-soft); }
+  .trophy-winner .yr { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:500; font-size:36px; color:var(--kings-red); line-height:1; transition: color .25s ease; }
+  .trophy-winner h3 { margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; line-height:1.1; color:var(--ink); transition: color .25s ease; }
+  .trophy-winner h3 em { font-style:normal; color:var(--kings-red); }
+  .trophy-winner .who { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:13px; color:var(--ink-soft); }
   .trophy-winner p { margin:8px 0 0; font-size:13px; line-height:1.55; color:var(--ink-muted); transition: color .25s ease; }
 
   /* 13 Club — Historical winners list */
@@ -1411,11 +1434,11 @@
   }
   .winner-history li:hover { background:var(--paper-warm); padding-left:14px; }
   .winner-history .yr {
-    font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; color:var(--ink); line-height:1;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:24px; color:var(--ink); line-height:1;
   }
   .winner-history li:hover .yr { color:var(--kings-red); }
   .winner-history .name { font-size:14px; color:var(--ink); line-height:1.5; }
-  .winner-history .name em { font-style:italic; color:var(--ink-soft); font-size:13px; display:block; margin-top:2px; }
+  .winner-history .name em { font-style:normal; color:var(--ink-soft); font-size:13px; display:block; margin-top:2px; }
 
   /* Directory — story card */
   .story-card {
@@ -1423,9 +1446,9 @@
     padding:32px 32px 30px; margin-bottom:24px;
   }
   .story-card .lab { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .story-card h3 { margin:8px 0 14px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:28px; line-height:1.1; color:var(--ink); }
-  .story-card h3 em { font-style:italic; color:var(--kings-red); }
-  .story-card .meta { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
+  .story-card h3 { margin:8px 0 14px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:28px; line-height:1.1; color:var(--ink); }
+  .story-card h3 em { font-style:normal; color:var(--kings-red); }
+  .story-card .meta { font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
   .story-card p { margin:0 0 14px; font-size:14.5px; line-height:1.65; color:var(--ink-muted); }
   .story-card p:last-child { margin-bottom:0; }
   .story-card .bios {
@@ -1433,7 +1456,7 @@
     margin:18px 0 0; padding:18px 0 0; border-top:1px solid var(--rule);
   }
   .story-card .bio-card { font-size:13px; color:var(--ink-muted); line-height:1.55; }
-  .story-card .bio-card strong { color:var(--ink); font-weight:600; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; display:block; margin-bottom:4px; }
+  .story-card .bio-card strong { color:var(--ink); font-weight:600; font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:16px; display:block; margin-bottom:4px; }
 
   /* Useful links cards */
   .links-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
@@ -1446,13 +1469,13 @@
   }
   .link-card:hover { border-color:var(--ink); background:var(--ink); color:#fff; transform:translateY(-2px); }
   .link-card .lab { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--kings-red); font-weight:700; }
-  .link-card h4 { margin:6px 0 4px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink); transition: color .25s ease; }
-  .link-card h4 em { font-style:italic; color:var(--kings-red); }
+  .link-card h4 { margin:6px 0 4px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink); transition: color .25s ease; }
+  .link-card h4 em { font-style:normal; color:var(--kings-red); }
   .link-card:hover h4 { color:#fff; }
   .link-card p { margin:0 0 10px; font-size:13px; line-height:1.55; color:var(--ink-muted); transition: color .25s ease; flex:1; }
   .link-card:hover p { color:#bcbcbc; }
   .link-card .url {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--kings-red);
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:13px; color:var(--kings-red);
     word-break:break-all;
   }
   .link-card .arrow { font-size:13px; font-weight:600; color:var(--kings-red); transition: transform .2s ease; }
@@ -1467,7 +1490,7 @@
   .past-lecture:last-child { border-bottom:1px solid var(--rule); }
   .past-lecture .yr-col { position:relative; padding-top:6px; }
   .past-lecture .yr-col .yr {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-weight:500;
     font-size:64px; line-height:0.95; letter-spacing:-.02em; color:var(--ink); display:block;
   }
   .past-lecture:hover .yr-col .yr { color:var(--kings-red); transition: color .2s ease; }
@@ -1480,12 +1503,12 @@
   .past-lecture .yr-col .yr-tag.online { background:var(--ink); color:#fff; border-color:var(--ink); }
 
   .past-lecture .body h3 {
-    margin:0 0 6px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:0 0 6px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:26px; line-height:1.15; letter-spacing:-.005em; color:var(--ink);
   }
-  .past-lecture .body h3 em { font-style:italic; color:var(--kings-red); }
+  .past-lecture .body h3 em { font-style:normal; color:var(--kings-red); }
   .past-lecture .body .by {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:17px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:17px;
     color:var(--ink-soft); margin-bottom:14px;
   }
   .past-lecture .body .by strong { font-style:normal; color:var(--ink); font-weight:500; }
@@ -1530,8 +1553,8 @@
     color:var(--ink-soft); margin-bottom:18px;
   }
   .memorial-hero h1 {
-    margin:0 auto 22px; font-family:'Cormorant Garamond', serif;
-    font-style:italic; font-weight:400;
+    margin:0 auto 22px; font-family:'Space Grotesk', system-ui, sans-serif;
+    font-style:normal; font-weight:400;
     font-size:88px; line-height:1; letter-spacing:-.012em; color:var(--ink);
     max-width:860px;
   }
@@ -1540,7 +1563,7 @@
     margin:32px auto 0;
   }
   .memorial-hero .standfirst {
-    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-style:normal;
     font-size:18px; line-height:1.55; color:var(--ink-muted);
     max-width:600px; margin:32px auto 0;
   }
@@ -1559,7 +1582,7 @@
   .memorial-list li:first-child { border-top:1px solid var(--rule); }
   .memorial-list li:hover { background:var(--paper-warm); padding-left:18px; padding-right:18px; }
   .memorial-list .name {
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-style:normal; font-weight:400;
     font-size:24px; line-height:1.15; color:var(--ink); letter-spacing:-.005em;
   }
   .memorial-list .name .pre {
@@ -1567,7 +1590,7 @@
     color:var(--ink-soft); font-weight:600; margin-right:10px; vertical-align:middle;
   }
   .memorial-list .dates {
-    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-style:normal;
     font-size:18px; color:var(--kings-red); white-space:nowrap;
   }
   .memorial-list .dates.unknown {
@@ -1584,25 +1607,105 @@
     font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--kings-red); font-weight:700;
   }
   .tribute-note h3 {
-    margin:14px auto 10px; font-family:'Cormorant Garamond',serif; font-weight:500;
+    margin:14px auto 10px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
     font-size:30px; line-height:1.1; color:var(--ink); max-width:560px;
   }
-  .tribute-note h3 em { font-style:italic; color:var(--kings-red); }
+  .tribute-note h3 em { font-style:normal; color:var(--kings-red); }
   .tribute-note p { margin:0 auto 20px; font-size:14px; line-height:1.65; color:var(--ink-muted); max-width:560px; }
   .tribute-note .email {
-    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px;
+    font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:18px;
     color:var(--kings-red); border-bottom:1px solid #D3231A55; transition: border-color .2s ease;
   }
   .tribute-note .email:hover { border-bottom-color:var(--kings-red); }
 
+  /* === Widget placeholders — Eventbrite slot, LinkedIn Newsflash slot === */
+  .widget-placeholder {
+    margin:0 auto; max-width:900px;
+    padding:44px 44px;
+    background:#fff8f7; border:2px dashed #f4d4d2; border-radius:8px;
+    position:relative;
+  }
+  .widget-placeholder::before {
+    content:"PLACEHOLDER";
+    position:absolute; top:-11px; left:32px;
+    background:var(--kings-red); color:#fff;
+    padding:3px 10px; font-size:10px; font-weight:700;
+    letter-spacing:.18em; border-radius:2px;
+  }
+  .widget-placeholder-kicker {
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--kings-red); font-weight:700; margin-bottom:12px;
+  }
+  .widget-placeholder h3 {
+    margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
+    font-size:26px; line-height:1.15; color:var(--ink); letter-spacing:-.005em;
+  }
+  .widget-placeholder h3 em { color:var(--kings-red); font-weight:600; }
+  .widget-placeholder p { margin:0 0 12px; font-size:14px; line-height:1.6; color:var(--ink-muted); max-width:640px; }
+  .widget-placeholder-note {
+    margin-top:14px !important; padding:12px 14px;
+    background:#fff; border-left:3px solid var(--kings-red);
+    font-size:12.5px !important; color:var(--ink-soft) !important;
+  }
+  .widget-placeholder a { color:var(--kings-red); border-bottom:1px solid #D3231A33; }
+  .widget-placeholder a:hover { border-bottom-color:var(--kings-red); }
+  @media (max-width: 720px) {
+    .widget-placeholder { padding:32px 24px; margin:0 8px; }
+    .widget-placeholder h3 { font-size:22px; }
+  }
+
+  /* === Social CTA band — LinkedIn Group + Page CTAs === */
+  .social-cta-band {
+    padding:56px 56px; background:var(--ink); color:#fff;
+    box-shadow: 0 0 0 100vmax var(--ink); clip-path: inset(0 -100vmax);
+    border-bottom:1px solid #262626;
+  }
+  .social-cta-band-inner { max-width:1100px; margin:0 auto; }
+  .social-cta-band .kicker { color:var(--kings-red-bright); margin-bottom:12px; }
+  .social-cta-band h2 {
+    margin:0 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
+    font-size:36px; line-height:1.05; color:#fff;
+  }
+  .social-cta-band h2 em { color:var(--kings-red-bright); font-weight:600; }
+  .social-cta-band p {
+    margin:0 0 24px; font-size:14.5px; line-height:1.6; color:#c4c4c4; max-width:640px;
+  }
+  .social-cta-actions {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:720px;
+  }
+  .social-cta {
+    display:flex; align-items:center; gap:14px;
+    padding:16px 20px; border-radius:6px;
+    color:#fff !important; text-decoration:none;
+    transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+    cursor:pointer;
+  }
+  .social-cta.primary { background:var(--kings-red); }
+  .social-cta.primary:hover { background:#b41d15; transform:translateY(-1px); box-shadow:0 6px 14px rgba(211,35,26,.35); }
+  .social-cta.secondary { background:#1e1e1e; border:1px solid #333; }
+  .social-cta.secondary:hover { background:#282828; transform:translateY(-1px); }
+  .social-cta-icon {
+    display:inline-flex; width:32px; height:32px; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.12); border-radius:4px; flex-shrink:0;
+  }
+  .social-cta.secondary .social-cta-icon { background:rgba(255,255,255,.06); }
+  .social-cta-label { display:flex; flex-direction:column; gap:2px; }
+  .social-cta-title { font-weight:700; font-size:14.5px; letter-spacing:.005em; }
+  .social-cta-sub { font-size:11.5px; color:rgba(255,255,255,.72); font-weight:400; }
+  @media (max-width: 960px) {
+    .social-cta-actions { grid-template-columns:1fr; }
+    .social-cta-band { padding:44px 24px; }
+    .social-cta-band h2 { font-size:30px; }
+  }
+
   /* === Footer === */
   .foot {
-    background:var(--kings-navy); color:#cbd4e1; padding:48px 56px 28px;
+    background:var(--ink); color:#c4c4c4; padding:48px 56px 28px;
     /* Full-bleed: extend background to viewport edges even when body is max-width capped */
-    box-shadow: 0 0 0 100vmax var(--kings-navy);
+    box-shadow: 0 0 0 100vmax var(--ink);
     clip-path: inset(0 -100vmax);
   }
-  .foot-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; padding-bottom:32px; border-bottom:1px solid var(--kings-navy-border); }
+  .foot-top { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr 1fr; gap:32px; padding-bottom:32px; border-bottom:1px solid #2a2a2a; }
   .foot-brand .wordmark {
     display:inline-flex; flex-direction:column; gap:6px;
     text-decoration:none; color:#fff;
@@ -1610,22 +1713,27 @@
   }
   .foot-brand .wordmark:hover { color:var(--kings-red-bright); }
   .foot-brand .wordmark .wordmark-abbr {
-    font-family:'Cormorant Garamond', serif;
+    font-family:'Space Grotesk', system-ui, sans-serif;
     font-size:28px; font-weight:600; line-height:1;
     letter-spacing:.06em;
   }
   .foot-brand .wordmark .wordmark-full {
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic; font-size:14px; line-height:1.25;
-    color:#cbd4e1;
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    font-style:normal; font-size:14px; line-height:1.25;
+    color:#c4c4c4;
     transition: color .2s ease;
   }
-  .foot-brand .wordmark:hover .wordmark-full { color:#e6ecf5; }
-  .foot-brand p { margin:14px 0 0; font-size:12.5px; line-height:1.6; color:#9bb0c9; max-width:300px; }
+  .foot-brand .wordmark:hover .wordmark-full { color:#e6e6e6; }
+  .foot-brand p { margin:14px 0 0; font-size:12.5px; line-height:1.6; color:#a3a3a3; max-width:300px; }
   .foot h5 { margin:0 0 12px; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff; font-weight:700; }
   .foot ul { margin:0; padding:0; list-style:none; }
-  .foot li { font-size:13px; line-height:2; color:#9bb0c9; }
-  .foot li a { position:relative; padding-bottom:1px; transition: color .2s ease; }
+  .foot li { font-size:13px; line-height:2; color:#a3a3a3; }
+  .foot li a { position:relative; padding-bottom:1px; transition: color .2s ease; display:inline-flex; align-items:center; gap:8px; }
+  .foot li a .foot-icon {
+    display:inline-flex; width:14px; height:14px; align-items:center; justify-content:center;
+    opacity:.75; transition: opacity .2s ease;
+  }
+  .foot li a:hover .foot-icon { opacity:1; }
   .foot li a::after {
     content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
     background:var(--kings-red-bright); transform:scaleX(0); transform-origin:left;
@@ -1633,13 +1741,13 @@
   }
   .foot li a:hover { color:#fff; }
   .foot li a:hover::after { transform:scaleX(1); }
-  .foot-brand p { color:#9bb0c9 !important; }
-  .foot-brand .lockup .name .sub { color:#9bb0c9 !important; }
-  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#7c93b0; gap:16px; flex-wrap:wrap; align-items:center; }
-  .foot-bot em { font-style:italic; color:#cbd4e1; }
+  .foot-brand p { color:#a3a3a3 !important; }
+  .foot-brand .lockup .name .sub { color:#a3a3a3 !important; }
+  .foot-bot { display:flex; justify-content:space-between; padding-top:24px; font-size:12px; color:#8a8a8a; gap:16px; flex-wrap:wrap; align-items:center; }
+  .foot-bot em { font-style:normal; color:#d4d4d4; }
   .foot-bot .foot-credit { text-align:center; flex:1 1 auto; }
   .foot-bot .foot-credit a {
-    color:#cbd4e1; font-weight:600; letter-spacing:.01em;
+    color:#d4d4d4; font-weight:600; letter-spacing:.01em;
     border-bottom:1px solid transparent;
     transition: color .2s ease, border-color .2s ease;
   }
@@ -1747,8 +1855,18 @@
        !important deliberately overrides the base `.nav { display:flex }` rule. */
     nav.nav { display:none !important; }
     .mobile-menu-btn { display:flex !important; align-items:center; justify-content:center; }
-    /* Hide the desktop "Join KCLEA" CTA on mobile — Contact lives in the drawer */
+    /* Hide the desktop "Become a Member" CTA on mobile — the drawer has its own highlighted entry */
     .khead a.head-cta { display:none !important; }
+    /* Mobile drawer: highlighted Become a Member CTA at the top of the drawer */
+    body.menu-open .nav .mobile-cta {
+      display:flex !important; justify-content:center; align-items:center;
+      background:var(--kings-red); color:#fff !important;
+      font-weight:700; letter-spacing:.01em; font-size:14.5px;
+      padding:14px 18px !important; border-radius:6px; margin-bottom:14px;
+      border-bottom:none !important; min-height:48px;
+      box-shadow: 0 4px 10px rgba(211,35,26,.28);
+    }
+    body.menu-open .nav .mobile-cta:hover { background:#b41d15; }
 
     /* Make the header NOT a stacking context on mobile so the drawer's z-index
        can take effect at the page-root level (escapes the sticky-header trap). */
@@ -1952,13 +2070,14 @@
   </a>
   <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">☰</button>
   <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+    <a class="mobile-cta" data-page-link="become-member">Become a Member</a>
     <a data-page-link="home">Home</a>
 
     <div class="nav-item has-dropdown" tabindex="0">
       <a data-page-link="events">Events</a>
       <ul class="nav-dropdown">
         <li class="head-row">Calendar</li>
-        <li><a data-page-link="events"><span class="lab">All events</span>Calendar of events</a></li>
+        <li><a data-page-link="events">Calendar of events</a></li>
         <li class="divider"></li>
         <li class="head-row">Upcoming</li>
         <li><a data-page-link="event-hardhacks26"><span class="lab">6 — 7 Jun 2026</span>Hardware Hacks 26</a></li>
@@ -1980,37 +2099,37 @@
 
     <div class="nav-item has-dropdown" tabindex="0">
       <a data-page-link="committee">Committee</a>
-      <ul class="nav-dropdown">
-        <li><a data-page-link="committee"><span class="lab">Roster</span>The Committee</a></li>
+      <ul class="nav-dropdown cols-2">
+        <li><a data-page-link="committee">The Committee</a></li>
         <li class="divider"></li>
         <li class="head-row">Records</li>
-        <li><a><span class="lab">Document</span>Constitution (PDF)</a></li>
-        <li><a><span class="lab">Records</span>Committee Meeting Minutes</a></li>
-        <li><a><span class="lab">Records</span>AGM Agenda</a></li>
-        <li><a><span class="lab">Records · Finance</span>Annual Accounts</a></li>
+        <li><a>Constitution (PDF)</a></li>
+        <li><a>Committee Meeting Minutes</a></li>
+        <li><a>AGM Agenda</a></li>
+        <li><a>Annual Accounts</a></li>
       </ul>
     </div>
 
     <div class="nav-item has-dropdown" tabindex="0">
       <a data-page-link="about">About Us</a>
-      <ul class="nav-dropdown">
-        <li><a data-page-link="about"><span class="lab">Overview</span>About KCLEA</a></li>
+      <ul class="nav-dropdown cols-2">
+        <li><a data-page-link="about">About KCLEA</a></li>
         <li class="divider"></li>
         <li class="head-row">Members &amp; governance</li>
-        <li><a data-page-link="about-membership"><span class="lab">Section</span>Membership</a></li>
-        <li><a data-page-link="about-bursaries"><span class="lab">Section</span>Bursaries</a></li>
-        <li><a data-page-link="about-constitution"><span class="lab">Section</span>Constitution</a></li>
-        <li><a data-page-link="about-13club"><span class="lab">Section</span>13 Club Trophy</a></li>
-        <li><a data-page-link="about-directory"><span class="lab">Section</span>Directory of members</a></li>
+        <li><a data-page-link="about-membership">Membership</a></li>
+        <li><a data-page-link="about-bursaries">Bursaries</a></li>
+        <li><a data-page-link="about-constitution">Constitution</a></li>
+        <li><a data-page-link="about-13club">13 Club Trophy</a></li>
+        <li><a data-page-link="about-directory">Directory of members</a></li>
         <li class="divider"></li>
-        <li><a data-page-link="about-links"><span class="lab">External</span>Useful links to KCL</a></li>
+        <li><a data-page-link="about-links">Useful links to KCL</a></li>
       </ul>
     </div>
 
     <a data-page-link="in-memoriam">In Memoriam</a>
     <a data-page-link="contact">Contact</a>
   </nav>
-  <a class="head-cta" data-page-link="contact">Join KCLEA</a>
+  <a class="head-cta" data-page-link="become-member">Become a Member</a>
 </header>
 
 <main id="main-content" role="main">
@@ -2095,6 +2214,18 @@
       </div>
     </div>
 
+    <!-- LinkedIn Newsflash widget — PLACEHOLDER (awaiting build vs manual curation decision) -->
+    <div class="section">
+      <div class="newsflash-placeholder widget-placeholder" data-widget="linkedin-newsflash">
+        <div class="widget-placeholder-inner">
+          <div class="widget-placeholder-kicker">Newsflash</div>
+          <h3>Latest from KCLEA on <em>LinkedIn</em>.</h3>
+          <p>This space will display the three most recent LinkedIn posts from the KCLEA feed — updated automatically as the Committee posts new content.</p>
+          <p class="widget-placeholder-note">Placeholder — awaiting decision on integration route (paid third-party widget vs manual curation via CMS). Once resolved, the widget mounts here.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="section alt">
       <div class="connect">
         <div class="head">
@@ -2104,16 +2235,16 @@
           <p class="hint">It helps if you have your subject and graduation date in your profile.</p>
         </div>
         <div class="channels">
-          <a class="channel">
+          <a class="channel" href="https://www.linkedin.com/groups/12856215/" target="_blank" rel="noopener">
             <span class="lab">LinkedIn group</span>
             <h4>KCLEA Group on LinkedIn</h4>
-            <p>Join the discussion with King's engineering alumni.</p>
+            <p>Join the discussion with King's engineering alumni — ~600 members.</p>
             <span class="arrow">Join the group →</span>
           </a>
           <a class="channel">
             <span class="lab">LinkedIn page</span>
             <h4>Follow KCLEA on LinkedIn</h4>
-            <p>For members, students &amp; other engineers.</p>
+            <p>For members, students &amp; other engineers. <em style="color:var(--kings-red);font-size:11.5px">(Page URL TBC)</em></p>
             <span class="arrow">Follow →</span>
           </a>
           <a class="channel">
@@ -2635,6 +2766,16 @@
       </div>
     </div>
 
+    <!-- Eventbrite registration widget — PLACEHOLDER -->
+    <div class="widget-placeholder eventbrite-slot" data-widget="eventbrite" data-event-slug="annual-lunch-2026">
+      <div class="widget-placeholder-inner">
+        <div class="widget-placeholder-kicker">Registration</div>
+        <h3>Ticket registration via <em>Eventbrite</em>.</h3>
+        <p>Once the Committee confirms the KCLEA Eventbrite organiser account, this space will host the live Eventbrite widget — ticket options, capacity, and a one-click checkout, embedded directly on this page as it appears on <a href="https://www.kcl.ac.uk" target="_blank" rel="noopener">kcl.ac.uk</a>.</p>
+        <p class="widget-placeholder-note">Placeholder — awaiting KCLEA Eventbrite organiser account &amp; event URL. Until then, please email <em>membership@kclea.org.uk</em> to reserve a seat.</p>
+      </div>
+    </div>
+
     <!-- About the event -->
     <div class="ed-section">
       <h2>About the <em>lunch</em>.</h2>
@@ -2847,6 +2988,16 @@
       </div>
     </div>
 
+    <!-- Eventbrite registration widget — PLACEHOLDER -->
+    <div class="widget-placeholder eventbrite-slot" data-widget="eventbrite" data-event-slug="annual-lecture-2026">
+      <div class="widget-placeholder-inner">
+        <div class="widget-placeholder-kicker">Registration</div>
+        <h3>Ticket registration via <em>Eventbrite</em>.</h3>
+        <p>Once the Committee confirms the KCLEA Eventbrite organiser account, this space will host the live Eventbrite widget — capacity, ticket types, and a one-click checkout, embedded directly on this page as it appears on <a href="https://www.kcl.ac.uk" target="_blank" rel="noopener">kcl.ac.uk</a>.</p>
+        <p class="widget-placeholder-note">Placeholder — awaiting KCLEA Eventbrite organiser account &amp; event URL. Until then, the lecture is free and no advance registration is strictly required, but numbers do help.</p>
+      </div>
+    </div>
+
     <!-- Lecture title block -->
     <div class="lecture-title">
       <div class="badge-lab">2026<br>Lecture</div>
@@ -3027,7 +3178,7 @@
       <div class="ed-prose">
         <p>KCLEA inaugurated the concept of an Annual Lecture on engineering topics after the Faculty of Engineering was closed in <strong style="color:var(--ink);font-weight:600">2013</strong>. Each spring, a distinguished speaker reflects on a theme of engineering practice, leadership, or progress — followed by drinks and networking.</p>
         <p>Details of <a>previous KCLEA Annual Lectures</a> can be found in the archive.</p>
-        <p style="background:var(--paper-warm);border-left:3px solid var(--kings-red);padding:12px 16px;font-size:13.5px;color:var(--ink-muted);font-style:italic;">We hope to record this year's lecture — but we are short of committee members to organise it. <a data-page-link="contact" style="color:var(--kings-red);font-style:normal;font-weight:600;border-bottom:1px solid #D3231A33">If you'd like to help KCLEA, get in touch.</a></p>
+        <p style="background:var(--paper-warm);border-left:3px solid var(--kings-red);padding:12px 16px;font-size:13.5px;color:var(--ink-muted);font-style:normal;">We hope to record this year's lecture — but we are short of committee members to organise it. <a data-page-link="contact" style="color:var(--kings-red);font-style:normal;font-weight:600;border-bottom:1px solid #D3231A33">If you'd like to help KCLEA, get in touch.</a></p>
       </div>
     </div>
 
@@ -3199,7 +3350,7 @@
             <span class="pill">18:30 — 20:30</span>
             <span class="pill dark">JKTL Nash Lecture Theatre (K2.31) · Strand Campus</span>
           </div>
-          <p style="font-style:italic; font-family:'Cormorant Garamond', serif; font-size:16px; color:var(--ink-soft);">"How a splendid ship was sunk by the obstinacy and perversity of man."</p>
+          <p style="font-style:normal; font-family:'Space Grotesk', system-ui, sans-serif; font-size:16px; color:var(--ink-soft);">"How a splendid ship was sunk by the obstinacy and perversity of man."</p>
           <p>Graham's talk discussed how the Titanic was a triumph of American finance and British engineering. He explained the background to many of her technical issues, and showed how the design features of the Titanic and her two sister ships prove what splendid technical triumphs they were.</p>
           <p>He reasoned that the Titanic did not hit the iceberg by her own accord, but because of <strong>the failings of her captain and officers</strong> — and that the tragic loss of life was because regulations permitted 16 lifeboats to be taken off the Titanic the day before she left Southampton. These human failings, he argued, are the reasons why the Titanic has become the world's most famous maritime tragedy.</p>
           <div class="speaker-bio">
@@ -3357,6 +3508,7 @@
               <h3>Peter <em>Weitzel</em></h3>
               <div class="program"><em>Electrical Engineering</em></div>
               <div class="years"><strong>KCL</strong>1972 — 1975</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3369,6 +3521,7 @@
               <h3>Chris <em>Bowden</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1963 — 1967</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3381,6 +3534,7 @@
               <h3>David <em>Blacoe</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1966 — 1969</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3393,6 +3547,7 @@
               <h3>Liz <em>Beckmann</em></h3>
               <div class="program"><em>Electrical &amp; Electronic Engineering</em></div>
               <div class="years"><strong>KCL</strong>1971 — 1974</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3405,6 +3560,7 @@
               <h3>John <em>Thomson</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1964 — 1967</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3444,6 +3600,7 @@
               <h3>Georgina <em>Lupa Florian</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2011 — 2012</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3456,6 +3613,7 @@
               <h3>George <em>Obada</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2019 — 2022</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3480,6 +3638,7 @@
               <h3>Dr Ernest <em>Okon</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1997 — 2001</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3519,6 +3678,7 @@
               <h3>Dr John <em>Zubrzycki</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1974 — 1981</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3531,6 +3691,7 @@
               <h3>Afrin <em>Basit</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>2021 — 2024</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3606,6 +3767,7 @@
               <h3>Mike <em>Clode</em></h3>
               <div class="program"><em>Faculty of Engineering</em>, staff</div>
               <div class="years"><strong>KCL</strong>1981 staff · 1989 — 2014</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3618,6 +3780,7 @@
               <h3>Chris <em>Bowden</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1963 — 1967</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3630,6 +3793,7 @@
               <h3>John <em>Thomson</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1964 — 1967</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3642,6 +3806,7 @@
               <h3>Graham <em>Raven</em></h3>
               <div class="program">Programme TBC</div>
               <div class="years"><strong>KCL</strong>1960 — 1963</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3654,6 +3819,7 @@
               <h3>David <em>Sheridan</em></h3>
               <div class="program"><em>Electrical &amp; Electronic Engineering</em></div>
               <div class="years"><strong>KCL</strong>1968 — 1972</div>
+              <div class="bio">Bio to follow.</div>
             </div>
           </div>
         </div>
@@ -3994,6 +4160,35 @@
         <a class="ed-btn primary" data-page-link="contact">Use the contact form →</a>
       </div>
     </div>
+
+    <!-- LinkedIn CTA band — Join Group + Follow Page -->
+    <div class="social-cta-band">
+      <div class="social-cta-band-inner">
+        <div class="kicker">Join the network</div>
+        <h2>Connect with <em>KCLEA</em> on LinkedIn.</h2>
+        <p>The KCLEA LinkedIn group is where members share career updates, opportunities, and reconnect with old classmates. Public followers of the company page get event announcements and Committee news.</p>
+        <div class="social-cta-actions">
+          <a class="social-cta primary" href="https://www.linkedin.com/groups/12856215/" target="_blank" rel="noopener">
+            <span class="social-cta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7A1.7 1.7 0 116.5 4a1.7 1.7 0 010 3.7zM19 19h-3v-5c0-1.3-.6-2-1.7-2-1 0-1.6.7-1.9 1.5-.1.3-.1.7-.1 1V19h-3V9h3v1.3c.4-.6 1.2-1.6 3-1.6 2.2 0 3.7 1.4 3.7 4.4V19z"/></svg>
+            </span>
+            <span class="social-cta-label">
+              <span class="social-cta-title">Join the LinkedIn group</span>
+              <span class="social-cta-sub">Members-only · ~600 alumni</span>
+            </span>
+          </a>
+          <a class="social-cta secondary">
+            <span class="social-cta-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7A1.7 1.7 0 116.5 4a1.7 1.7 0 010 3.7zM19 19h-3v-5c0-1.3-.6-2-1.7-2-1 0-1.6.7-1.9 1.5-.1.3-.1.7-.1 1V19h-3V9h3v1.3c.4-.6 1.2-1.6 3-1.6 2.2 0 3.7 1.4 3.7 4.4V19z"/></svg>
+            </span>
+            <span class="social-cta-label">
+              <span class="social-cta-title">Follow the LinkedIn Page</span>
+              <span class="social-cta-sub">Public · URL TBC</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -4033,7 +4228,7 @@
         <p>Students must formally apply to be considered for a bursary using <strong style="color:var(--ink);font-weight:600">no more than 500 words</strong>. The award is decided by a panel of KCLEA committee members and academic staff, based on the following criteria, with the weighting for each shown alongside.</p>
       </div>
 
-      <h3 style="margin:32px 0 12px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--ink);">Award <em style="color:var(--kings-red);font-style:italic">criteria</em>.</h3>
+      <h3 style="margin:32px 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink);">Award <em style="color:var(--kings-red);font-style:italic">criteria</em>.</h3>
       <ul class="criteria">
         <li>
           <span class="what"><strong>Presentation and clarity</strong> of the application.</span>
@@ -4074,7 +4269,7 @@
           <li><strong>Hei (Harriet) Chung</strong>2nd year Biomedical Engineering</li>
           <li><strong>Alexis Kusikwenyu</strong>2nd year Biomedical Engineering</li>
         </ul>
-        <p style="margin:10px 0 0; font-size:12.5px; font-style:italic; color:var(--ink-soft);">All winners have been invited to the Annual Lunch so we can congratulate them personally.</p>
+        <p style="margin:10px 0 0; font-size:12.5px; font-style:normal; color:var(--ink-soft);">All winners have been invited to the Annual Lunch so we can congratulate them personally.</p>
       </div>
 
       <div class="ed-prose" style="margin-top:24px;">
@@ -4256,7 +4451,7 @@
         <div class="clause"><strong>12.2 Issues not covered</strong> — any matter not provided for by these Rules shall be left to the discretion of the Committee.</div>
       </div>
 
-      <div style="margin-top:32px; padding:18px 22px; background:var(--paper-warm); border-left:3px solid var(--kings-red); border-radius:4px; font-size:13px; color:var(--ink-muted); font-style:italic; line-height:1.6;">
+      <div style="margin-top:32px; padding:18px 22px; background:var(--paper-warm); border-left:3px solid var(--kings-red); border-radius:4px; font-size:13px; color:var(--ink-muted); font-style:normal; line-height:1.6;">
         <strong style="font-style:normal; color:var(--kings-red); font-weight:700; letter-spacing:.04em;">END</strong> — This was agreed at the AGM on 2 December 2025. It changed the Committee structure in sections 4 &amp; 5, introducing the Officer + Executive role split.
       </div>
     </div>
@@ -4296,11 +4491,11 @@
       <div class="ed-prose">
         <p>A trophy, named <strong style="color:var(--ink);font-weight:600">'The 13 Club Trophy'</strong>, is awarded to the 'finals' year — past or to come — whose record of reunions at KCLEA functions and at special gatherings of its members is judged to be the best during the preceding year. The trophy is a statue of Reggie suitably mounted on a pedestal.</p>
         <p>The following is an extract from the conditions for the award:</p>
-        <p style="font-style:italic; padding:14px 18px; background:var(--paper-warm); border-left:3px solid var(--kings-red); border-radius:3px;">"The '13' Club Trophy is awarded to the 'group' of old King's engineers whose record of reunions during the preceding year at KCLEA functions and special gatherings of its members is judged to be the most meritorious. A 'group' may consist of a number of engineers who were of the same year at King's, or a number of King's engineers residing in the same locality — e.g. a town, a county, or a foreign country. The award is made annually by the KCLEA Committee, whose judgement is final."</p>
+        <p style="font-style:normal; padding:14px 18px; background:var(--paper-warm); border-left:3px solid var(--kings-red); border-radius:3px;">"The '13' Club Trophy is awarded to the 'group' of old King's engineers whose record of reunions during the preceding year at KCLEA functions and special gatherings of its members is judged to be the most meritorious. A 'group' may consist of a number of engineers who were of the same year at King's, or a number of King's engineers residing in the same locality — e.g. a town, a county, or a foreign country. The award is made annually by the KCLEA Committee, whose judgement is final."</p>
         <p>Over the years, the scope of the award has been broadened to allow the trophy to be presented to former engineering students who have made significant achievements in their professional or personal life, raised the profile of King's engineering, or given significant service to King's engineering or KCLEA.</p>
       </div>
 
-      <h3 style="margin:48px 0 18px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Recent <em style="color:var(--kings-red);font-style:italic">awardees</em>.</h3>
+      <h3 style="margin:48px 0 18px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Recent <em style="color:var(--kings-red);font-style:italic">awardees</em>.</h3>
 
       <div class="trophy-winners">
         <div class="trophy-winner">
@@ -4323,7 +4518,7 @@
         </div>
       </div>
 
-      <h3 style="margin:48px 0 18px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Winners since <em style="color:var(--kings-red);font-style:italic">2009</em>.</h3>
+      <h3 style="margin:48px 0 18px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Winners since <em style="color:var(--kings-red);font-style:italic">2009</em>.</h3>
 
       <ul class="winner-history">
         <li>
@@ -4379,10 +4574,10 @@
       <div class="ed-prose">
         <p>If you have any stories and photographs, please send them using the <a data-page-link="contact" style="color:var(--kings-red);font-weight:600;border-bottom:1px solid #D3231A33">Contact Us page</a> — we will publish them here.</p>
         <p>Due to the Data Protection Act, it is not possible to publish on a public website a list of all members with their addresses, telephone numbers, and other personal details. If you wish to check your membership of KCLEA or get in touch with colleagues from the past, you should go via the <strong style="color:var(--ink);font-weight:600">Alumni Office</strong>, who hold the central database of information about all past students.</p>
-        <p style="font-style:italic; color:var(--ink-soft);">The members area of this website is merely for maintenance of the website.</p>
+        <p style="font-style:normal; color:var(--ink-soft);">The members area of this website is merely for maintenance of the website.</p>
       </div>
 
-      <h3 style="margin:48px 0 18px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Stories from <em style="color:var(--kings-red);font-style:italic">alumni</em>.</h3>
+      <h3 style="margin:48px 0 18px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:30px; color:var(--ink); letter-spacing:-.005em;">Stories from <em style="color:var(--kings-red);font-style:italic">alumni</em>.</h3>
 
       <div class="story-card">
         <div class="lab">June 2007 · Class of 1961</div>
@@ -4390,7 +4585,7 @@
         <div class="meta">Three electrical engineers who graduated in 1961 met for the first time in over 44 years.</div>
         <p>Three electrical engineers who graduated in 1961 held a get-together on Sunday 10 June 2007. Two of them had not met for over 44 years. We had a meal in a restaurant near Hatton Locks, Warwickshire, and then spent some hours enjoying each other's company and the sunshine. If you know any of these three King's engineers and would like to get back in touch, we'd be delighted to hear from you — please drop a line to the Membership Secretary.</p>
         <p>We had a great time remembering life at King's between 1958 and 1961 — things like defending Reggie, parading him round the Strand, and snatching the University College mascot, Phineas. We remembered the surveying on Hampstead Heath which was part of our first-year civil engineering, designing a gear box as part of our mechanical engineering, and running up all the engines and electrical machinery for our practical work. We also recalled the time after taking our finals when we hired two sailing boats on the Norfolk Broads — three of us in one, and Peter Tamm, John Evans, and John Dymott in the other (who managed to snap their mast on the first day's sailing).</p>
-        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--ink-soft);">"Nostalgia isn't what it used to be."</p>
+        <p style="font-family:'Space Grotesk',system-ui,sans-serif; font-style:normal; font-size:16px; color:var(--ink-soft);">"Nostalgia isn't what it used to be."</p>
 
         <div class="bios">
           <div class="bio-card">
@@ -4680,6 +4875,164 @@
 
   </section>
 
+  <!-- ============================================================
+       PAGE 15 — BECOME A MEMBER
+       Standalone membership registration form.
+       ============================================================ -->
+  <section class="page" data-page="become-member">
+
+    <!-- Hero -->
+    <div class="ed-hero">
+      <div>
+        <div class="kicker">KCLEA · Membership</div>
+        <h1>Become a <em>Member</em>.</h1>
+        <p class="standfirst">KCLEA membership is open to anyone who has studied or worked at King's in Engineering. Complete the form below and the Committee will be in touch to confirm your membership.</p>
+        <div class="ed-pills">
+          <span class="ed-pill"><strong>Free</strong> — no annual fee</span>
+          <span class="ed-pill">Open to alumni, staff &amp; current students</span>
+          <span class="ed-pill dark"><strong>Privacy</strong> · we never share your details</span>
+        </div>
+      </div>
+
+      <div class="fact-card">
+        <h4>What members <em>get</em></h4>
+        <div class="fact-row">
+          <div class="lab">Bulletin</div>
+          <div class="val">The King's Engineer, twice a year</div>
+        </div>
+        <div class="fact-row">
+          <div class="lab">Events</div>
+          <div class="val">Annual Lunch · Annual Lecture · Hardware Hacks · quarterly meet-ups</div>
+        </div>
+        <div class="fact-row">
+          <div class="lab">Network</div>
+          <div class="val">LinkedIn group of ~600 alumni engineers</div>
+        </div>
+        <div class="fact-row">
+          <div class="lab">Bursaries</div>
+          <div class="val">Vote on Committee-awarded grants to current students</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form + Sidebar -->
+    <div class="contact-shell">
+
+      <!-- The form -->
+      <div class="form-card">
+        <div class="form-kicker">Membership application</div>
+        <h2>Join <em>KCLEA</em>.</h2>
+        <p class="form-lede">Please fill in the form below. Required fields are marked with an asterisk. The Committee typically responds within a week.</p>
+
+        <form onsubmit="event.preventDefault(); alert('In production this submits to the KCLEA membership endpoint.'); return false;">
+
+          <div class="field-row">
+            <div class="field">
+              <label for="m-name">Full name <span class="req">*</span></label>
+              <input id="m-name" type="text" placeholder="Jane Smith" required>
+            </div>
+            <div class="field">
+              <label for="m-email">Email address <span class="req">*</span></label>
+              <input id="m-email" type="email" placeholder="jane@example.com" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="m-tel">Telephone</label>
+              <input id="m-tel" type="tel" placeholder="+44 …">
+            </div>
+            <div class="field">
+              <label for="m-year">Year of graduation from King's <span class="req">*</span></label>
+              <input id="m-year" type="text" placeholder="e.g. 1985 or 2018" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="m-course">Course / discipline <span class="req">*</span></label>
+            <select id="m-course" required>
+              <option value="">Select your course</option>
+              <option>Civil Engineering</option>
+              <option>Mechanical Engineering</option>
+              <option>Electrical / Electronic Engineering</option>
+              <option>Computer Engineering</option>
+              <option>Biomedical Engineering &amp; Imaging Science</option>
+              <option>Department of Engineering (post-2019)</option>
+              <option>Staff (Faculty / Department)</option>
+              <option>Current student</option>
+              <option>Other / Not listed</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="m-alumni">Alumni number (if known)</label>
+              <input id="m-alumni" type="text" placeholder="Optional — King's alumni ID">
+            </div>
+            <div class="field">
+              <label for="m-employer">Current employer &amp; role</label>
+              <input id="m-employer" type="text" placeholder="Optional — helps the network">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="m-msg">Anything you'd like to add?</label>
+              <span class="counter"><em>0 / 500</em></span>
+            </div>
+            <textarea id="m-msg" maxlength="500" rows="4" placeholder="Interests, volunteering, questions — up to 500 characters." oninput="this.previousElementSibling.querySelector('.counter em').textContent = this.value.length + ' / 500'"></textarea>
+          </div>
+
+          <div class="privacy-note">
+            <div class="icon">i</div>
+            <div>
+              <strong>Privacy</strong> — we will not pass on your details to any other party. They will only be used to administer your membership.
+              <a>Read the full privacy notice →</a>
+            </div>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit">Submit application →</button>
+            <button type="reset" class="reset">Clear form</button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="contact-side">
+        <div class="kicker" style="margin-bottom:8px">Also connect</div>
+        <h3>Join us on <em>LinkedIn</em>.</h3>
+        <p class="lede">Whether you complete the form or not, joining the KCLEA network on LinkedIn is the fastest way to plug in.</p>
+
+        <div class="channel-list">
+          <a class="channel-link" href="https://www.linkedin.com/groups/12856215/" target="_blank" rel="noopener">
+            <span class="for">LinkedIn Group</span>
+            <span class="addr">Join the KCLEA group →</span>
+            <span class="note">Private group of ~600 KCLEA members. Post, discuss, find old classmates.</span>
+          </a>
+          <a class="channel-link">
+            <span class="for">LinkedIn Company Page</span>
+            <span class="addr">Follow KCLEA →</span>
+            <span class="note">Public updates from the Committee — events, bulletins, announcements. <em style="color:var(--kings-red)">(URL TBC — placeholder)</em></span>
+          </a>
+          <a class="channel-link" href="https://www.instagram.com/kclea.official/" target="_blank" rel="noopener">
+            <span class="for">Instagram</span>
+            <span class="addr">@kclea.official →</span>
+            <span class="note">Photos from events, member spotlights, campus updates.</span>
+          </a>
+        </div>
+
+        <div class="social">
+          <div class="social-row"><strong style="font-weight:600">Alumni</strong><a href="https://www.kcl.ac.uk" target="_blank" rel="noopener">King's College London →</a></div>
+          <div class="social-row"><strong style="font-weight:600">Questions?</strong><a data-page-link="contact">Contact the Committee →</a></div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
 </main>
 
 <!-- ============================================================
@@ -4720,7 +5073,23 @@
         <li><a>Privacy</a></li>
         <li><a>Terms of Use</a></li>
         <li><a>Site Map</a></li>
-        <li><a>Webmaster</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="https://www.linkedin.com/groups/12856215/" target="_blank" rel="noopener" aria-label="Join the KCLEA LinkedIn group (opens in new tab)">
+          <span class="foot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V9h3v10zM6.5 7.7A1.7 1.7 0 116.5 4a1.7 1.7 0 010 3.7zM19 19h-3v-5c0-1.3-.6-2-1.7-2-1 0-1.6.7-1.9 1.5-.1.3-.1.7-.1 1V19h-3V9h3v1.3c.4-.6 1.2-1.6 3-1.6 2.2 0 3.7 1.4 3.7 4.4V19z"/></svg></span>
+          LinkedIn group
+        </a></li>
+        <li><a href="https://www.instagram.com/kclea.official/" target="_blank" rel="noopener" aria-label="KCLEA on Instagram (opens in new tab)">
+          <span class="foot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.9.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.9-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.9-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 2.1c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.5-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.5.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.5 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.5-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zM12 7.4a4.6 4.6 0 110 9.2 4.6 4.6 0 010-9.2zm0 7.6a3 3 0 100-6 3 3 0 000 6zm5.9-7.8a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/></svg></span>
+          Instagram
+        </a></li>
+        <li><a href="https://www.kcl.ac.uk" target="_blank" rel="noopener" aria-label="King's College London (opens in new tab)">
+          <span class="foot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2 2 7v2h20V7L12 2zm-8 9v9h4v-6h8v6h4v-9H4z"/></svg></span>
+          King's College London
+        </a></li>
       </ul>
     </div>
   </div>
