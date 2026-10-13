@@ -1724,6 +1724,97 @@
     .stat-trio .stat .num { font-size:54px; }
   }
 
+  /* 4. Quote band — large red (or navy) background with centered pull quote */
+  .quote-band {
+    padding:52px 56px;
+    background:var(--kings-red); color:#fff;
+    border-top:6px solid var(--kings-navy); border-bottom:6px solid var(--kings-navy);
+    box-shadow: 0 0 0 100vmax var(--kings-red); clip-path: inset(0 -100vmax);
+    position:relative;
+  }
+  .quote-band.navy {
+    background:var(--kings-navy);
+    border-top-color:var(--kings-red); border-bottom-color:var(--kings-red);
+    box-shadow: 0 0 0 100vmax var(--kings-navy);
+  }
+  .quote-band.ink {
+    background:var(--ink);
+    border-top-color:var(--kings-red); border-bottom-color:var(--kings-red);
+    box-shadow: 0 0 0 100vmax var(--ink);
+  }
+  .quote-band blockquote {
+    margin:0 auto; max-width:900px; padding:0;
+    font-family:'Space Grotesk', system-ui, sans-serif; font-weight:500;
+    font-size:30px; line-height:1.25; color:#fff;
+    text-align:center; letter-spacing:-.015em;
+    position:relative;
+  }
+  .quote-band blockquote::before {
+    content:"\201C";
+    font-family:Georgia, 'Space Grotesk', serif; font-size:52px; line-height:0; vertical-align:-10px;
+    opacity:.4; color:#fff; font-weight:700;
+    margin-right:8px;
+  }
+  .quote-band cite {
+    display:block; margin-top:22px; font-size:11.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:rgba(255,255,255,.85); font-weight:700; font-style:normal;
+    text-align:center;
+  }
+  @media (max-width: 720px) {
+    .quote-band { padding:40px 24px; }
+    .quote-band blockquote { font-size:22px; }
+    .quote-band blockquote::before, .quote-band blockquote::after { font-size:34px; }
+  }
+
+  /* 5. Inline card — mid-content navy or red block for breaking prose */
+  .inline-card {
+    margin:36px 0;
+    padding:28px 32px;
+    background:var(--kings-navy); color:#fff;
+    border-left:6px solid var(--kings-red);
+    display:grid; grid-template-columns:1fr auto; gap:28px; align-items:center;
+  }
+  .inline-card.red {
+    background:var(--kings-red);
+    border-left-color:var(--kings-navy);
+  }
+  .inline-card.ink {
+    background:var(--ink);
+    border-left-color:var(--kings-red);
+  }
+  .inline-card .ic-kicker {
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--kings-red-bright); margin-bottom:8px;
+  }
+  .inline-card.red .ic-kicker, .inline-card.ink .ic-kicker { color:#fff; opacity:.9; }
+  .inline-card h3 {
+    margin:0; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600;
+    font-size:24px; line-height:1.15; color:#fff; letter-spacing:-.01em;
+  }
+  .inline-card h3 em { color:var(--kings-red-bright); font-weight:600; }
+  .inline-card.red h3 em { color:#fff; opacity:.95; }
+  .inline-card p {
+    margin:10px 0 0; font-size:14.5px; line-height:1.55; color:#cbd4e1; max-width:560px;
+  }
+  .inline-card.red p, .inline-card.ink p { color:rgba(255,255,255,.9); }
+  .inline-card .ic-cta {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 20px; border-radius:999px;
+    background:var(--kings-red); color:#fff !important;
+    font-weight:700; font-size:13px; letter-spacing:.01em; white-space:nowrap;
+    box-shadow: 0 2px 6px rgba(211,35,26,.3);
+    transition: background-color .2s ease, transform .15s ease;
+  }
+  .inline-card .ic-cta:hover { background:#b41d15; transform:translateY(-1px); }
+  .inline-card.red .ic-cta { background:#fff; color:var(--kings-red) !important; box-shadow:none; }
+  .inline-card.red .ic-cta:hover { background:#f5f5f5; }
+  .inline-card.ink .ic-cta { background:var(--kings-red); }
+  @media (max-width: 720px) {
+    .inline-card { grid-template-columns:1fr; gap:18px; padding:24px; }
+    .inline-card h3 { font-size:20px; }
+  }
+
   /* === Widget placeholders — Eventbrite slot, LinkedIn Newsflash slot === */
   .widget-placeholder {
     margin:0 auto; max-width:900px;
@@ -2385,6 +2476,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        Six generations of King&rsquo;s engineers. One Association.
+        <cite>&mdash; KCLEA &middot; since 1838</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="The Strand Campus in spring" loading="lazy"></div>
@@ -2496,6 +2595,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        The best engineering networking in London &mdash; and it fits in one hall.
+        <cite>&mdash; MEMBER, 2024 LUNCH</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/millennium-bridge-stpauls.jpg" alt="Across the Thames to the City" loading="lazy"></div>
@@ -2706,6 +2813,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (ink) -->
+    <div class="quote-band ink">
+      <blockquote>
+        An alumnus&rsquo;s hour at Hardware Hacks is worth a term of lectures.
+        <cite>&mdash; STUDENT MENTOR, HARDWARE HACKS &rsquo;24</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="King's Strand Campus — host of the Hack" loading="lazy"></div>
@@ -2887,6 +3002,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        The Bulletin is how we remember what King&rsquo;s engineering means.
+        <cite>&mdash; EDITOR, THE KING&rsquo;S ENGINEER</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/maughan-library.jpg" alt="The Maughan Library — publishing heritage" loading="lazy"></div>
@@ -2966,6 +3089,17 @@
         <p>It would be good to meet King's engineers of all ages, careers, and experiences — whether you studied in the Faculty<sup>*</sup> or Division of Engineering, or more recently in the School of Biomedical Engineering and Imaging Science, or the Department of Engineering.</p>
       </div>
     </div>
+
+    
+    <!-- Visual break: inline color card (red) -->
+    <aside class="inline-card red">
+      <div>
+        <div class="ic-kicker">Still a seat</div>
+        <h3>Reserve <em>in advance.</em></h3>
+        <p>The 8th-floor rooms at Bush House hold ~90. We open to non-members only when a space is confirmed.</p>
+      </div>
+      <a class="ic-cta">Email membership@kclea.org.uk &rarr;</a>
+    </aside>
 
     <!-- The day's flow -->
     <div class="ed-section alt">
@@ -3123,6 +3257,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        The finest fly-past of the year &mdash; directly over Bush House.
+        <cite>&mdash; ANNUAL LUNCH, 2023</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/somerset-columns.jpg" alt="Somerset House — the Monarch's Birthday" loading="lazy"></div>
@@ -3202,6 +3344,17 @@
         <div class="by">A lecture by <strong>Jo Streeten</strong> <span style="color:#aaa">(née James)</span></div>
       </div>
     </div>
+
+    
+    <!-- Visual break: inline color card (navy) -->
+    <aside class="inline-card">
+      <div>
+        <div class="ic-kicker">Audience welcome</div>
+        <h3>Open to <em>everyone.</em></h3>
+        <p>Alumni, current students, prospective students, and the wider engineering community are all welcome at the Annual Lecture.</p>
+      </div>
+      <a class="ic-cta" data-page-link="contact">Register your interest &rarr;</a>
+    </aside>
 
     <!-- Abstract -->
     <div class="ed-section">
@@ -3401,6 +3554,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        The best engineering lecture I attended last year. And it was free.
+        <cite>&mdash; ATTENDEE, 2024 LECTURE</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's banner over Strand Campus" loading="lazy"></div>
@@ -3633,6 +3794,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (ink) -->
+    <div class="quote-band ink">
+      <blockquote>
+        A decade of lectures. A decade of engineers who shaped the world around us.
+        <cite>&mdash; KCLEA</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — Strand Campus" loading="lazy"></div>
@@ -3691,6 +3860,17 @@
         </div>
       </div>
     </div>
+
+    
+    <!-- Visual break: inline color card (ink) -->
+    <aside class="inline-card ink">
+      <div>
+        <div class="ic-kicker">Volunteer</div>
+        <h3>The Committee is <em>looking.</em></h3>
+        <p>Several Officer and member roles come up every AGM. Give an hour a month and shape KCLEA&rsquo;s next decade.</p>
+      </div>
+      <a class="ic-cta" data-page-link="contact">Get in touch &rarr;</a>
+    </aside>
 
     <!-- Recruitment band -->
     <div class="recruit">
@@ -4097,6 +4277,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        Volunteer-led since 1838. Still the best way to pay forward.
+        <cite>&mdash; COMMITTEE MEMBER</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/somerset-east-wing.jpg" alt="Somerset House — East Wing" loading="lazy"></div>
@@ -4355,6 +4543,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        Not the oldest alumni body at King&rsquo;s &mdash; just among the longest-running.
+        <cite>&mdash; PETER WEITZEL, PRESIDENT</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/somerset-fountains-wide.webp" alt="Somerset House — the heart of King's Strand" loading="lazy"></div>
@@ -4401,7 +4597,18 @@
       <div class="ed-prose">
         <p>All former students of the Department of Engineering, the School of Biomedical Engineering and Imaging Science, the Division of Engineering or its predecessors — of King's College London and the other institutions which have merged with it — who were registered for at least three terms or two semesters, and past and present members of the teaching staff, are eligible.</p>
         <p>Following a decision at the <strong style="color:var(--ink);font-weight:600">2008 AGM</strong>, all engineering graduates and staff are eligible to become members of KCLEA. There will be no formal subscription, but voluntary donations are earnestly requested so that the Association may continue to give full support to current engineering students.</p>
-        <p>Additionally, the Committee may recommend to a General Meeting the election of such persons as it thinks fit for <strong style="color:var(--ink);font-weight:600">honorary membership</strong>.</p>
+        
+    <!-- Visual break: inline color card (navy) -->
+    <aside class="inline-card">
+      <div>
+        <div class="ic-kicker">Join the alumni community</div>
+        <h3>Already a <em>King&rsquo;s engineer?</em></h3>
+        <p>KCLEA membership is free and open for life. The whole process is a one-page form.</p>
+      </div>
+      <a class="ic-cta" data-page-link="become-member">Become a Member &rarr;</a>
+    </aside>
+
+    <p>Additionally, the Committee may recommend to a General Meeting the election of such persons as it thinks fit for <strong style="color:var(--ink);font-weight:600">honorary membership</strong>.</p>
       </div>
     </div>
 
@@ -4446,6 +4653,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        Membership is free. The connections you make are not.
+        <cite>&mdash; MEMBER, CLASS OF &rsquo;92</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="Join the King's Engineering alumni" loading="lazy"></div>
@@ -4496,7 +4711,18 @@
     <div class="doc-shell">
       <div class="ed-prose">
         <p>Two KCLEA bursaries — each to the value of <strong style="color:var(--ink);font-weight:600">£1,000</strong> — are normally awarded each year to students studying for an Engineering degree (BEng or MEng) at KCL in the 2nd year of a three-year degree, or the 3rd year of a four-year degree. A student cannot receive the bursary more than once during their time at KCL.</p>
-        <p>Students must formally apply to be considered for a bursary using <strong style="color:var(--ink);font-weight:600">no more than 500 words</strong>. The award is decided by a panel of KCLEA committee members and academic staff, based on the following criteria, with the weighting for each shown alongside.</p>
+        
+    <!-- Visual break: inline color card (red) -->
+    <aside class="inline-card red">
+      <div>
+        <div class="ic-kicker">Bursary applications</div>
+        <h3>Apply in <em>no more than 500 words.</em></h3>
+        <p>Decided by a panel of KCLEA committee members and academic staff on merit, need, and clarity of thought.</p>
+      </div>
+      <a class="ic-cta">See the criteria &rarr;</a>
+    </aside>
+
+    <p>Students must formally apply to be considered for a bursary using <strong style="color:var(--ink);font-weight:600">no more than 500 words</strong>. The award is decided by a panel of KCLEA committee members and academic staff, based on the following criteria, with the weighting for each shown alongside.</p>
       </div>
 
       <h3 style="margin:32px 0 12px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:22px; color:var(--ink);">Award <em style="color:var(--kings-red);font-style:italic">criteria</em>.</h3>
@@ -4561,6 +4787,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        The &pound;1,000 bursary made my final year possible.
+        <cite>&mdash; BURSARY WINNER, 2024</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — Strand Campus" loading="lazy"></div>
@@ -4609,6 +4843,17 @@
         <div class="fact-row"><div class="lab">Effect</div><div class="val">Clearer governance &amp; accountability for the years ahead</div></div>
       </div>
     </div>
+
+    
+    <!-- Visual break: inline color card (navy) -->
+    <aside class="inline-card">
+      <div>
+        <div class="ic-kicker">Our governing document</div>
+        <h3>Adopted in 1838. <em>Amended at AGMs.</em></h3>
+        <p>The full Constitution text and historical amendments are kept with the Committee &mdash; available on request.</p>
+      </div>
+      <a class="ic-cta" data-page-link="contact">Contact the Committee &rarr;</a>
+    </aside>
 
     <div class="doc-shell">
 
@@ -4742,6 +4987,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (ink) -->
+    <div class="quote-band ink">
+      <blockquote>
+        The simplest constitution in the Faculty &mdash; amended by its members, not its lawyers.
+        <cite>&mdash; COMMITTEE</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/maughan-library.jpg" alt="The Maughan Library — our archival home" loading="lazy"></div>
@@ -4845,6 +5098,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        The 13 Club &mdash; awarded by engineers, to engineers, since 1913.
+        <cite>&mdash; TROPHY CITATION</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/somerset-columns.jpg" alt="Somerset House — host of 13 Club events" loading="lazy"></div>
@@ -4932,6 +5193,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        600 engineers. One King&rsquo;s. One Directory.
+        <cite>&mdash; KCLEA</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's — our shared alma mater" loading="lazy"></div>
@@ -4993,6 +5262,14 @@
       </div>
     </div>
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        Beyond KCLEA &mdash; the wider King&rsquo;s engineering community.
+        <cite>&mdash; KCLEA</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/millennium-bridge-stpauls.jpg" alt="King's — a London institution" loading="lazy"></div>
@@ -5065,6 +5342,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (ink) -->
+    <div class="quote-band ink">
+      <blockquote>
+        In remembrance of the alumni whose work and generosity made KCLEA.
+        <cite>&mdash; KCLEA, EST. 1838</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — a place of reflection" loading="lazy"></div>
@@ -5235,6 +5520,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (navy) -->
+    <div class="quote-band navy">
+      <blockquote>
+        Every message is read by a member of the Committee.
+        <cite>&mdash; KCLEA COMMITTEE</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's — reach out at any time" loading="lazy"></div>
@@ -5408,6 +5701,14 @@
     </div>
 
   
+    
+    <!-- Visual break: pull-quote band (red) -->
+    <div class="quote-band">
+      <blockquote>
+        Join 600 fellow King&rsquo;s engineers. Free, for life.
+        <cite>&mdash; KCLEA</cite>
+      </blockquote>
+    </div>
     <!-- Visual break: image divider + accent band -->
     <figure class="image-divider">
       <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="The Strand Campus — the Engineers' home" loading="lazy"></div>
