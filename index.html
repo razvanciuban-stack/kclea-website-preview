@@ -1618,6 +1618,112 @@
   }
   .tribute-note .email:hover { border-bottom-color:var(--kings-red); }
 
+  /* ============================================================
+     VISUAL BREAK COMPONENTS — image dividers + navy/red accent bands
+     Reusable across pages to reduce text density and add rhythm.
+     ============================================================ */
+
+  /* 1. Image divider — full-bleed image with navy caption strip */
+  .image-divider {
+    margin:0; padding:0; position:relative;
+    background:var(--ink);
+    box-shadow: 0 0 0 100vmax var(--ink); clip-path: inset(0 -100vmax);
+  }
+  .image-divider .img-wrap {
+    position:relative; overflow:hidden;
+    aspect-ratio: 24/9; width:100%;
+  }
+  .image-divider .img-wrap img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .image-divider:hover .img-wrap img { transform: scale(1.03); }
+  .image-divider figcaption {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:18px 56px;
+    background:linear-gradient(180deg, rgba(4,32,73,0) 0%, rgba(4,32,73,.9) 100%);
+    color:#fff;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
+    font-family:'Space Grotesk', system-ui, sans-serif;
+  }
+  .image-divider .cap-title { font-size:16px; font-weight:600; letter-spacing:-.005em; }
+  .image-divider .cap-note { font-size:12.5px; color:#cbd4e1; font-weight:400; }
+  @media (max-width: 720px) {
+    .image-divider .img-wrap { aspect-ratio: 4/3; }
+    .image-divider figcaption { padding:14px 20px; flex-direction:column; align-items:flex-start; gap:4px; }
+    .image-divider .cap-title { font-size:14px; }
+  }
+
+  /* 2. Accent band — navy background with large red kicker + short pull quote */
+  .accent-band {
+    padding:56px 56px; background:var(--kings-navy); color:#fff;
+    box-shadow: 0 0 0 100vmax var(--kings-navy); clip-path: inset(0 -100vmax);
+    position:relative;
+  }
+  .accent-band::before {
+    content:""; position:absolute; left:0; top:0; bottom:0; width:6px;
+    background:var(--kings-red);
+  }
+  .accent-band-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center; }
+  .accent-band .ab-kicker {
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700;
+    font-size:72px; line-height:1; letter-spacing:-.02em;
+    color:var(--kings-red-bright);
+    white-space:nowrap;
+  }
+  .accent-band .ab-text {
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:500;
+    font-size:22px; line-height:1.3; color:#fff;
+    max-width:640px; letter-spacing:-.005em;
+  }
+  .accent-band .ab-text em { color:var(--kings-red-bright); font-weight:600; }
+  .accent-band .ab-note {
+    display:block; margin-top:10px;
+    font-size:13px; font-weight:400; color:#cbd4e1; letter-spacing:.02em;
+  }
+  @media (max-width: 720px) {
+    .accent-band { padding:36px 24px; }
+    .accent-band-inner { grid-template-columns:1fr; gap:14px; }
+    .accent-band .ab-kicker { font-size:54px; }
+    .accent-band .ab-text { font-size:18px; }
+  }
+
+  /* 3. Stat trio — three cards alternating navy / red / navy with big numbers */
+  .stat-trio {
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--rule); border:1px solid var(--rule);
+    margin:0;
+  }
+  .stat-trio .stat {
+    padding:36px 28px; color:#fff;
+    display:flex; flex-direction:column; justify-content:space-between;
+    min-height:200px;
+    transition: transform .25s ease;
+  }
+  .stat-trio .stat:hover { transform: translateY(-2px); }
+  .stat-trio .stat:nth-child(odd)  { background:var(--kings-navy); }
+  .stat-trio .stat:nth-child(even) { background:var(--kings-red); }
+  .stat-trio .stat .num {
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700;
+    font-size:72px; line-height:.95; letter-spacing:-.025em;
+  }
+  .stat-trio .stat:nth-child(odd) .num  { color:var(--kings-red-bright); }
+  .stat-trio .stat:nth-child(even) .num { color:#fff; }
+  .stat-trio .stat .lbl {
+    font-family:'Inter',system-ui,sans-serif; font-weight:600;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(255,255,255,.75); margin-top:14px;
+  }
+  .stat-trio .stat .cap {
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:500;
+    font-size:16px; line-height:1.3; color:#fff; margin-top:8px;
+  }
+  @media (max-width: 960px) {
+    .stat-trio { grid-template-columns:1fr; }
+    .stat-trio .stat { min-height:auto; padding:28px 24px; }
+    .stat-trio .stat .num { font-size:54px; }
+  }
+
   /* === Widget placeholders — Eventbrite slot, LinkedIn Newsflash slot === */
   .widget-placeholder {
     margin:0 auto; max-width:900px;
@@ -2204,6 +2310,31 @@
       </div>
     </div>
 
+    <!-- KCLEA in numbers — stat trio (navy/red/navy) -->
+    <div class="stat-trio">
+      <div class="stat">
+        <div class="num">186</div>
+        <div>
+          <div class="lbl">Years</div>
+          <div class="cap">Founded in <strong>1838</strong> — one of King's oldest alumni bodies.</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="num">~600</div>
+        <div>
+          <div class="lbl">Members</div>
+          <div class="cap">Engineering alumni, staff &amp; students across the KCLEA network.</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="num">£1k</div>
+        <div>
+          <div class="lbl">Bursaries</div>
+          <div class="cap">Awarded to two engineering undergraduates every year.</div>
+        </div>
+      </div>
+    </div>
+
     <!-- LinkedIn Newsflash widget — PLACEHOLDER (awaiting build vs manual curation decision) -->
     <div class="section">
       <div class="newsflash-placeholder widget-placeholder" data-widget="linkedin-newsflash">
@@ -2253,6 +2384,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="The Strand Campus in spring" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The Strand Campus in spring</div>
+        <div class="cap-note">King's College London</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">1838</div>
+        <div class="ab-text">The year the <em>King's Engineers' Association</em> was founded. Still here, still alumni-led.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -2349,6 +2495,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/millennium-bridge-stpauls.jpg" alt="Across the Thames to the City" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Across the Thames to the City</div>
+        <div class="cap-note">The route to Strand from the South</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">5+</div>
+        <div class="ab-text">Major KCLEA events a year — plus smaller meet-ups between. <em>All welcome.</em></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -2544,6 +2705,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="King's Strand Campus — host of the Hack" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">King's Strand Campus — host of the Hack</div>
+        <div class="cap-note">Strand, London WC2</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">48h</div>
+        <div class="ab-text"><em>One hall. One hundred students.</em> Alumni mentoring the next cohort of King's engineers.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -2710,6 +2886,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/maughan-library.jpg" alt="The Maughan Library — publishing heritage" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The Maughan Library — publishing heritage</div>
+        <div class="cap-note">Chancery Lane, London</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Since 1946</div>
+        <div class="ab-text">The King's Engineer Bulletin — <em>twice a year, every year.</em></div>
+      </div>
+    </div>
   </section>
   <section class="page" data-page="annual-lunch">
 
@@ -2931,6 +3122,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/somerset-columns.jpg" alt="Somerset House — the Monarch's Birthday" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Somerset House — the Monarch's Birthday</div>
+        <div class="cap-note">8th Floor, Bush House</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">12:00</div>
+        <div class="ab-text">Doors open · <em>drinks, lunch, and the RAF fly-past</em> over Bush House.</div>
+      </div>
+    </div>
   </section>
   <section class="page" data-page="annual-lecture">
 
@@ -3194,6 +3400,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's banner over Strand Campus" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">King's banner over Strand Campus</div>
+        <div class="cap-note">Nash Lecture Theatre</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Free</div>
+        <div class="ab-text">Open to all — <em>alumni, students, and the wider engineering community.</em></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -3411,6 +3632,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — Strand Campus" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The King's Chapel — Strand Campus</div>
+        <div class="cap-note">King's Building</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">10+</div>
+        <div class="ab-text">A decade of <em>KCLEA Annual Lectures</em> — on infrastructure, biomedical, aerospace and more.</div>
+      </div>
+    </div>
   </section>
   <section class="page" data-page="committee">
 
@@ -3860,6 +4096,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/somerset-east-wing.jpg" alt="Somerset House — East Wing" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Somerset House — East Wing</div>
+        <div class="cap-note">Where the Committee meets</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Elected</div>
+        <div class="ab-text">The Committee is <em>elected annually at the AGM.</em> Alumni volunteers, giving their time.</div>
+      </div>
+    </div>
   </section>
   <section class="page" data-page="about">
 
@@ -4103,6 +4354,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/somerset-fountains-wide.webp" alt="Somerset House — the heart of King's Strand" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Somerset House — the heart of King's Strand</div>
+        <div class="cap-note">East Wing Court</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">186</div>
+        <div class="ab-text">Years as an <em>alumni body for King's engineers</em> — through every merger, name, and era.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -4177,6 +4443,21 @@
             </span>
           </a>
         </div>
+      </div>
+    </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="Join the King's Engineering alumni" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Join the King's Engineering alumni</div>
+        <div class="cap-note">Strand Campus</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Free</div>
+        <div class="ab-text">Open to <em>every engineering alum and staff member</em> who studied or taught at King's.</div>
       </div>
     </div>
   </section>
@@ -4277,6 +4558,21 @@
       <div class="cta-actions">
         <a class="ed-btn primary" data-page-link="contact">Use the contact form →</a>
         <a class="email">activities@kclea.org.uk</a>
+      </div>
+    </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — Strand Campus" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The King's Chapel — Strand Campus</div>
+        <div class="cap-note">Our ceremonial home</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">£1,000</div>
+        <div class="ab-text">Awarded each year to <em>two engineering undergraduates</em> — on merit and need.</div>
       </div>
     </div>
   </section>
@@ -4445,6 +4741,21 @@
         <strong style="font-style:normal; color:var(--kings-red); font-weight:700; letter-spacing:.04em;">END</strong> — This was agreed at the AGM on 2 December 2025. It changed the Committee structure in sections 4 &amp; 5, introducing the Officer + Executive role split.
       </div>
     </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/maughan-library.jpg" alt="The Maughan Library — our archival home" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The Maughan Library — our archival home</div>
+        <div class="cap-note">Chancery Lane</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">1838</div>
+        <div class="ab-text">The Constitution adopted at the Association's founding — <em>amended at AGMs since.</em></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -4533,6 +4844,21 @@
         Reluctantly, a change has been made: the trophy now remains in KCLEA custody, and recipients are given a medal as a permanent personal memento instead. This decision was taken because of the increasingly international nature of the former student body — and the dangers of allowing the trophy to travel far from London. The trophy itself is exhibited at the trophy presentation and at all KCLEA functions.
       </div>
     </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/somerset-columns.jpg" alt="Somerset House — host of 13 Club events" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">Somerset House — host of 13 Club events</div>
+        <div class="cap-note">East Wing</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">1913</div>
+        <div class="ab-text">The <em>13 Club Trophy</em> — awarded by a cohort of 13 alumni to each year's outstanding engineer.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -4605,6 +4931,21 @@
         <a class="email">bulletin@kclea.org.uk</a>
       </div>
     </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's — our shared alma mater" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">King's — our shared alma mater</div>
+        <div class="cap-note">Strand Campus</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">~600</div>
+        <div class="ab-text">Alumni engineers on the KCLEA network. <em>Reconnect with your contemporaries.</em></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -4649,6 +4990,21 @@
           <span class="url">kcl.ac.uk/entrepreneurship</span>
           <span class="arrow">Visit →</span>
         </a>
+      </div>
+    </div>
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/millennium-bridge-stpauls.jpg" alt="King's — a London institution" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">King's — a London institution</div>
+        <div class="cap-note">The City from Southwark</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">KCL</div>
+        <div class="ab-text">Beyond KCLEA — <em>King's College, the Alumni Office, and the Engineering departments.</em></div>
       </div>
     </div>
   </section>
@@ -4708,6 +5064,21 @@
       <a class="email">bulletin@kclea.org.uk</a>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-chapel.jpg" alt="The King's Chapel — a place of reflection" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The King's Chapel — a place of reflection</div>
+        <div class="cap-note">Strand Campus</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">In memory</div>
+        <div class="ab-text"><em>Of the alumni and friends</em> whose work and support shaped KCLEA across six generations.</div>
+      </div>
+    </div>
   </section>
   <section class="page" data-page="contact">
 
@@ -4863,6 +5234,21 @@
       </div>
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-banner.jpg" alt="King's — reach out at any time" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">King's — reach out at any time</div>
+        <div class="cap-note">Strand Campus</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Every message</div>
+        <div class="ab-text">Is read — <em>and answered within a few days</em> — by a Committee member.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -5021,6 +5407,21 @@
 
     </div>
 
+  
+    <!-- Visual break: image divider + accent band -->
+    <figure class="image-divider">
+      <div class="img-wrap"><img src="assets/images/kings-strand-cherry.jpg" alt="The Strand Campus — the Engineers' home" loading="lazy"></div>
+      <figcaption>
+        <div class="cap-title">The Strand Campus — the Engineers' home</div>
+        <div class="cap-note">King's College London</div>
+      </figcaption>
+    </figure>
+    <div class="accent-band">
+      <div class="accent-band-inner">
+        <div class="ab-kicker">Open</div>
+        <div class="ab-text">To <em>every engineer who ever passed through King's.</em> Free. No annual fee.</div>
+      </div>
+    </div>
   </section>
 
 </main>
