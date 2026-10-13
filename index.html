@@ -2001,6 +2001,50 @@
     z-index:-1;
   }
 
+  /* ============================================================
+     KCLEA ROUNDED SEAL — decorative watermark for formal pages
+     ============================================================ */
+  .kclea-seal {
+    position:absolute; pointer-events:none; display:block;
+    width:320px; height:320px;
+    opacity:.07;
+    top:50%; right:-40px; transform:translateY(-50%);
+    z-index:0;
+    transition: opacity .5s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  /* Default placement: right-center. Behind content (siblings use z-index:1) */
+  .ed-hero > .kclea-seal,
+  .hero > .kclea-seal,
+  .memorial-hero > .kclea-seal,
+  .doc-shell > .kclea-seal { z-index:0; }
+
+  /* Hover brightens + rotates the seal */
+  .ed-hero:hover > .kclea-seal,
+  .doc-shell:hover > .kclea-seal,
+  .memorial-hero:hover > .kclea-seal {
+    opacity:.12; transform:translateY(-50%) rotate(8deg);
+  }
+
+  /* Badge variant: smaller, fully opaque, as a visible accent */
+  .kclea-seal.badge {
+    width:140px; height:140px; opacity:1;
+    top:28px; right:28px; transform:none;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.1));
+  }
+  .ed-hero:hover > .kclea-seal.badge,
+  .doc-shell:hover > .kclea-seal.badge {
+    opacity:1; transform:rotate(8deg);
+  }
+
+  @media (max-width: 960px) {
+    .kclea-seal { width:220px; height:220px; right:-30px; opacity:.06; }
+    .kclea-seal.badge { width:96px; height:96px; top:20px; right:20px; }
+  }
+  @media (max-width: 720px) {
+    .kclea-seal:not(.badge) { display:none; }
+    .kclea-seal.badge { width:72px; height:72px; }
+  }
+
   /* === Widget placeholders — Eventbrite slot, LinkedIn Newsflash slot === */
   .widget-placeholder {
     margin:0 auto; max-width:900px;
@@ -3495,6 +3539,7 @@
 
     <!-- Hero -->
     <div class="ed-hero">
+      <img class="kclea-seal" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div>
         <div class="kicker">KCLEA · Friday 20 March 2026</div>
         <h1>The Annual<br><em>Lecture.</em></h1>
@@ -4042,6 +4087,7 @@
 
     <!-- Hero -->
     <div class="ed-hero">
+      <img class="kclea-seal" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div>
         <div class="kicker">KCLEA · Governance</div>
         <h1>The <em>Committee</em>.</h1>
@@ -4530,6 +4576,7 @@
 
     <!-- Hero -->
     <div class="ed-hero">
+      <img class="kclea-seal" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div>
         <div class="kicker">KCLEA · Engineering at King's since 1838</div>
         <h1>About<br><em>KCLEA</em>.</h1>
@@ -4945,6 +4992,7 @@
     </div>
 
     <div class="doc-shell">
+      <img class="kclea-seal badge" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div class="ed-prose">
         <p>Two KCLEA bursaries — each to the value of <strong style="color:var(--ink);font-weight:600">£1,000</strong> — are normally awarded each year to students studying for an Engineering degree (BEng or MEng) at KCL in the 2nd year of a three-year degree, or the 3rd year of a four-year degree. A student cannot receive the bursary more than once during their time at KCL.</p>
         
@@ -5114,6 +5162,7 @@
     </div>
 
     <div class="doc-shell">
+      <img class="kclea-seal" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
 
       <div class="toc">
         <div class="lab">Table of contents</div>
@@ -5305,6 +5354,7 @@
     </div>
 
     <div class="doc-shell">
+      <img class="kclea-seal badge" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div class="ed-prose">
         <p>A trophy, named <strong style="color:var(--ink);font-weight:600">'The 13 Club Trophy'</strong>, is awarded to the 'finals' year — past or to come — whose record of reunions at KCLEA functions and at special gatherings of its members is judged to be the best during the preceding year. The trophy is a statue of Reggie suitably mounted on a pedestal.</p>
         <p>The following is an extract from the conditions for the award:</p>
@@ -5551,6 +5601,7 @@
 
     <!-- Memorial hero -->
     <div class="memorial-hero">
+      <img class="kclea-seal" src="assets/logos/kclea-logo-rounded.svg" alt="" aria-hidden="true">
       <div class="kicker">KCLEA · Remembrance</div>
       <h1>In Memoriam.</h1>
       <p class="standfirst">Remembering King's engineers — alumni, members, and members of staff — whose work, teaching, and friendship are kept in our memory by the Association.</p>
