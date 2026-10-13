@@ -35,11 +35,25 @@
   * { box-sizing:border-box; }
   html { margin:0; padding:0; background:#fff; }
   body {
-    margin:0 auto; padding:0;
+    margin:0; padding:0;
     font-family:'Inter', system-ui, sans-serif;
     color:var(--ink); background:var(--paper);
     -webkit-font-smoothing:antialiased; line-height:1.5;
-    max-width:1440px;
+    /* No max-width cap — sections span the full viewport. Internal wrappers
+       (hero-top, feature-band-inner, section-head etc.) hold readable text
+       widths. On very wide screens the header + nav flex-distribute cleanly. */
+  }
+  /* On very wide screens, add generous side padding so content stays visually
+     centered while backgrounds + photos keep bleeding edge-to-edge. */
+  @media (min-width: 1800px) {
+    .khead, .section, .ed-section, .doc-shell, .contact-shell,
+    .hero, .e-hero, .ed-hero, .b-hero, .memorial-hero, .month-section,
+    .hack-band, .cta-band, .recruit, .contribute, .social-cta-band,
+    .feature-band, .accent-band, .quote-band, .foot,
+    .lecture-title, .heritage, .today, .subpages, .archive, .archive-issues {
+      padding-left: calc((100vw - 1800px) / 2 + 56px) !important;
+      padding-right: calc((100vw - 1800px) / 2 + 56px) !important;
+    }
   }
   @media (max-width: 720px) {
     .khead, .hero, .e-hero, .ed-hero, .b-hero, .month-section,
