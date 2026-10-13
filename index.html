@@ -2006,13 +2006,13 @@
      ============================================================ */
   .kclea-seal {
     position:absolute; pointer-events:none; display:block;
-    width:320px; height:320px;
-    opacity:.07;
-    top:50%; right:-40px; transform:translateY(-50%);
+    width:240px; height:240px;
+    opacity:.11;
+    top:-40px; right:-30px;
     z-index:0;
     transition: opacity .5s ease, transform .8s cubic-bezier(.2,.7,.2,1);
   }
-  /* Default placement: right-center. Behind content (siblings use z-index:1) */
+  /* Explicit z-index behind siblings (which use z-index:1 from hero children rule) */
   .ed-hero > .kclea-seal,
   .hero > .kclea-seal,
   .memorial-hero > .kclea-seal,
@@ -2022,7 +2022,7 @@
   .ed-hero:hover > .kclea-seal,
   .doc-shell:hover > .kclea-seal,
   .memorial-hero:hover > .kclea-seal {
-    opacity:.12; transform:translateY(-50%) rotate(8deg);
+    opacity:.18; transform:rotate(8deg);
   }
 
   /* Badge variant: smaller, fully opaque, as a visible accent */
@@ -2036,8 +2036,19 @@
     opacity:1; transform:rotate(8deg);
   }
 
+  /* On ed-hero pages that have a right-column fact-card, the seal would
+     otherwise be covered. The top-right offset (above the ed-hero) ensures
+     it peeks out ABOVE the fact-card so it stays visible. */
+  [data-page="about"] .ed-hero > .kclea-seal,
+  [data-page="committee"] .ed-hero > .kclea-seal,
+  [data-page="annual-lecture"] .ed-hero > .kclea-seal {
+    top:-60px; right:-50px;
+    width:260px; height:260px;
+    opacity:.13;
+  }
+
   @media (max-width: 960px) {
-    .kclea-seal { width:220px; height:220px; right:-30px; opacity:.06; }
+    .kclea-seal { width:180px; height:180px; top:-30px; right:-25px; opacity:.1; }
     .kclea-seal.badge { width:96px; height:96px; top:20px; right:20px; }
   }
   @media (max-width: 720px) {
