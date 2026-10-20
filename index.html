@@ -1796,6 +1796,16 @@
     background:var(--ink);
     border-left-color:var(--kings-red);
   }
+  /* Flush variant: no vertical margin + full-bleed background, so the card
+     seals cleanly against the sections above and below instead of floating
+     with white strips around it. Use when the inline-card sits at page
+     section level (sibling of .ed-section), not inside prose. */
+  .inline-card.flush {
+    margin:0;
+    box-shadow: 0 0 0 100vmax var(--kings-navy); clip-path: inset(0 -100vmax);
+  }
+  .inline-card.flush.red { box-shadow: 0 0 0 100vmax var(--kings-red); }
+  .inline-card.flush.ink { box-shadow: 0 0 0 100vmax var(--ink); }
   .inline-card .ic-kicker {
     font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700;
     font-size:11px; letter-spacing:.2em; text-transform:uppercase;
@@ -1974,31 +1984,8 @@
     pointer-events:none;
   }
 
-  /* .six grid: thin red + navy accent rails along top and bottom */
-  .section .six {
-    position:relative;
-  }
-  .section .six::before {
-    content:""; position:absolute; top:-1px; left:0; right:60%;
-    height:3px; background:var(--kings-red); z-index:5;
-  }
-  .section .six::after {
-    content:""; position:absolute; bottom:-1px; left:40%; right:0;
-    height:3px; background:var(--kings-navy); z-index:5;
-  }
-
-  /* .roster grid (committee): same split-rail treatment */
-  .roster {
-    position:relative;
-  }
-  .roster::before {
-    content:""; position:absolute; top:-1px; left:0; right:55%;
-    height:3px; background:var(--kings-navy); z-index:5;
-  }
-  .roster::after {
-    content:""; position:absolute; bottom:-1px; left:45%; right:0;
-    height:3px; background:var(--kings-red); z-index:5;
-  }
+  /* (Removed: split-rail decorations on .six and .roster — they read as
+     stray lines above/below grid rows rather than as accents.) */
 
   /* .fact-card: tiny navy corner square (editorial accent) */
   .fact-card {
@@ -2075,15 +2062,9 @@
     color:var(--kings-red); background:rgba(211,35,26,.07);
   }
 
-  /* Timeline list items: red left-rail slides in */
-  .timeline li { position:relative; padding-left:0; transition: background-color .25s ease; }
-  .timeline li::after {
-    content:""; position:absolute; left:-14px; top:0; bottom:0; width:3px;
-    background:var(--kings-red); opacity:0;
-    transition: opacity .25s ease;
-  }
-  .timeline li:hover { background:rgba(4,32,73,.025); }
-  .timeline li:hover::after { opacity:1; }
+  /* Timeline list items: subtle colour shift only (no extra rails — the
+     existing bullets + spine already carry the red/navy accents). */
+  .timeline li .tl-title { transition: color .2s ease; }
   .timeline li:hover .tl-title { color:var(--kings-red); }
 
   /* Breadcrumb hover */
@@ -3541,7 +3522,7 @@
 
     
     <!-- Visual break: inline color card (red) -->
-    <aside class="inline-card red">
+    <aside class="inline-card red flush">
       <div>
         <div class="ic-kicker">Still a seat</div>
         <h3>Reserve <em>in advance.</em></h3>
@@ -3802,7 +3783,7 @@
 
     
     <!-- Visual break: inline color card (navy) -->
-    <aside class="inline-card">
+    <aside class="inline-card flush">
       <div>
         <div class="ic-kicker">Audience welcome</div>
         <h3>Open to <em>everyone.</em></h3>
@@ -4329,7 +4310,7 @@
 
     
     <!-- Visual break: inline color card (ink) -->
-    <aside class="inline-card ink">
+    <aside class="inline-card ink flush">
       <div>
         <div class="ic-kicker">Volunteer</div>
         <h3>The Committee is <em>looking.</em></h3>
@@ -5334,7 +5315,7 @@
 
     
     <!-- Visual break: inline color card (navy) -->
-    <aside class="inline-card">
+    <aside class="inline-card flush">
       <div>
         <div class="ic-kicker">Our governing document</div>
         <h3>Adopted in 1838. <em>Amended at AGMs.</em></h3>
