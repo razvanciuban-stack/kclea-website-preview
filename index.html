@@ -2028,17 +2028,22 @@
   }
 
   .item::before, .pillar::before, .step::before, .term-card::before,
-  .price-tier::before, .e-event::before, .travel-card::before,
-  .gov-doc::before {
+  .price-tier::before, .travel-card::before, .gov-doc::before {
     content:""; position:absolute; left:0; top:0; height:3px; width:0;
     background:var(--kings-red); z-index:4;
     transition: width .35s cubic-bezier(.2,.7,.2,1);
   }
   .item:hover::before, .pillar:hover::before, .step:hover::before,
   .term-card:hover::before, .price-tier:hover::before,
-  .e-event:hover::before, .travel-card:hover::before, .gov-doc:hover::before {
+  .travel-card:hover::before, .gov-doc:hover::before {
     width:100%;
   }
+
+  /* Event list rows: no top rail (the horizontal date|title layout makes
+     a top rail look like a stray line). A soft background tint + title
+     colour shift is enough. */
+  .e-event { transition: background-color .2s ease; }
+  .e-event:hover { background:rgba(4,32,73,.03); }
 
   /* Channel cards: navy bottom-rail hover */
   .channel { border-bottom:3px solid transparent; transition: border-color .25s ease, background-color .25s ease, transform .2s ease; }
